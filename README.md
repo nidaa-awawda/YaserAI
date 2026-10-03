@@ -1,110 +1,534 @@
-Small AI for Pediatric Leukemia Care Continuity
-World Bank Small AI for Development Challenge – Health
-1. Executive Summary
-YASER AI is a Small AI solution designed to help maintain continuity of care for children with leukemia in crisis-affected and low-resource settings. The system focuses on a practical problem: treatment and follow-up can become fragmented when families face disrupted connectivity, difficult access to health facilities, missing appointments, delayed tests, medication availability problems, or interrupted referrals.
-YASER does not diagnose leukemia, prescribe medication, or replace clinicians. Instead, it uses lightweight AI, Arabic natural-language processing, SMS/voice interfaces, offline-capable workflows, and a human-in-the-loop safety layer to identify potential gaps in a child's care pathway and alert an authorized health worker for review.
-2. The Problem
-Children with leukemia require coordinated and repeated interactions with the health system, including laboratory monitoring, treatment appointments, medication management, referrals, and follow-up. In crisis-affected or resource-constrained settings, these activities can become disconnected.
-•	A family may miss or lose a treatment or follow-up appointment.
-•	A required laboratory test may be delayed.
-•	Medication availability may be uncertain.
-•	A referral may remain pending.
-•	A family may have limited internet access or only a basic phone.
-•	Health workers may lack a simple consolidated view of what changed since the previous contact.
-The project therefore addresses continuity of care rather than attempting to automate clinical diagnosis.
-3. Why Pediatric Leukemia?
-Leukemia provides a focused and measurable first use case because pediatric leukemia care can involve repeated monitoring, treatment milestones, laboratory follow-up, medication and referral coordination. Starting with one disease allows the team to build and test a credible minimum viable product within a short hackathon while leaving a clear pathway for expansion.
-The first version will focus on pediatric leukemia. Later versions can expand to other pediatric cancers, other blood cancers, and eventually broader cancer-care pathways.
-4. The Proposed Solution
-YASER creates a lightweight digital care-continuity layer between families and health workers. A parent, caregiver, or authorized health worker can submit information through SMS, voice, or an offline-capable application.
+# YASER AI
+
+### Small AI for Pediatric Leukemia Care Continuity
+
+**World Bank Small AI for Development Challenge – Health**
+
+> **YASER AI helps keep pediatric leukemia care connected when connectivity, mobility, and healthcare access are disrupted.**
+
+---
+
+## Overview
+
+**YASER AI** is a lightweight **Small AI care-coordination system** designed to support continuity of care for children with leukemia in crisis-affected and low-resource settings.
+
+When healthcare pathways are disrupted, families may face:
+
+* Missed treatment or follow-up appointments
+* Delayed laboratory monitoring
+* Medication availability uncertainty
+* Pending or interrupted referrals
+* Limited internet connectivity
+* Difficulty communicating with healthcare providers
+* Fragmented information across different points of care
+
+YASER AI addresses this problem by creating a lightweight digital layer between **caregivers and authorized health workers**.
+
+The system uses:
+
+* Arabic Natural Language Processing (NLP)
+* SMS and voice-based interaction
+* Offline-capable workflows
+* Lightweight machine-learning models
+* Care-pathway event extraction
+* A Care Continuity Risk Engine
+* Explainable alerts
+* Human-in-the-loop review
+
+**YASER AI does not diagnose leukemia, prescribe medication, or replace clinicians.**
+
+---
+
+## The Problem
+
+Pediatric leukemia care can require repeated and coordinated interactions with healthcare services, including laboratory monitoring, treatment appointments, medication management, referrals, and follow-up.
+
+In crisis-affected or resource-constrained environments, these activities can become disconnected.
+
+For example:
+
+```text
+Caregiver
+   │
+   ├── Missed appointment
+   ├── Delayed laboratory test
+   ├── Medication uncertainty
+   ├── Pending referral
+   └── Limited connectivity
+          │
+          ▼
+   Fragmented care pathway
+          │
+          ▼
+   Risk of delayed follow-up
+```
+
+YASER AI focuses on **continuity of care**, rather than attempting to automate clinical diagnosis.
+
+---
+
+## Why Pediatric Leukemia?
+
+Pediatric leukemia provides a focused initial use case because care can involve:
+
+* Repeated follow-up
+* Laboratory monitoring
+* Treatment milestones
+* Medication coordination
+* Referrals
+* Regular communication between families and healthcare workers
+
+Starting with one disease allows the project to build and evaluate a focused MVP during the hackathon.
+
+The architecture is designed to later expand to:
+
+**Pediatric leukemia → Other pediatric cancers → Blood cancers → Broader cancer-care pathways**
+
+---
+
+# How YASER AI Works
+
+YASER provides a lightweight communication and care-coordination layer.
+
+A caregiver or authorized health worker can provide information through **SMS, voice, or an offline-capable application**.
+
 The system then:
-•	Extracts relevant care information from Arabic messages or voice transcripts.
-•	Organizes information into a patient care timeline.
-•	Detects potential gaps such as a missing follow-up, delayed monitoring, or unresolved referral.
-•	Calculates a Care Continuity Risk level for workflow prioritization.
-•	Explains which information triggered the alert.
-•	Escalates appropriate cases to an authorized human health worker.
-The risk level is a care-coordination signal, not a medical diagnosis or prediction of survival.
-5. Core Innovation: Care Continuity Risk Engine
-The central innovation is a Small AI engine that compares the current care state with the previous recorded state.
-Signal	Example	System response
-Appointment	Next follow-up unknown	Continuity gap
-Laboratory monitoring	Required test delayed	Review flag
-Medication	Availability uncertain	Follow-up required
-Symptoms	New reported symptom	Safety review
-Referral	Referral pending	Escalation workflow
-6. Example User Journey
-A caregiver sends an Arabic message: “The child has a fever today, the last blood test was four days ago, and we have not received confirmation of the next appointment.”
+
+1. Receives the communication
+2. Extracts relevant care information
+3. Updates the patient's care timeline
+4. Compares the current state with previous events
+5. Detects potential continuity gaps
+6. Calculates a workflow-oriented risk level
+7. Explains why the case was flagged
+8. Routes appropriate cases to an authorized health worker
+
+```text
+Caregiver
+    │
+    │ Arabic SMS / Voice
+    ▼
+┌──────────────────────┐
+│   YASER AI Intake    │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│    Arabic NLP        │
+│ Event Extraction     │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│ Care Continuity      │
+│ Risk Engine          │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│ Explainable Alert    │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│ Human Health Worker  │
+│       Review         │
+└──────────────────────┘
+```
+
+---
+
+# Core Innovation: Care Continuity Risk Engine
+
+The central component of YASER AI is the **Care Continuity Risk Engine**.
+
+Instead of attempting to predict a patient's medical outcome, the engine identifies potential **care-coordination gaps**.
+
+| Signal                | Example                | System Response     |
+| --------------------- | ---------------------- | ------------------- |
+| Appointment           | Next follow-up unknown | Continuity gap      |
+| Laboratory monitoring | Required test delayed  | Review flag         |
+| Medication            | Availability uncertain | Follow-up required  |
+| Symptoms              | New symptom reported   | Safety review       |
+| Referral              | Referral pending       | Escalation workflow |
+
+The resulting risk level is a **care-coordination signal**, not a medical diagnosis or prediction of survival.
+
+---
+
+# Example User Journey
+
+A caregiver sends an Arabic message:
+
+> "The child has a fever today, the last blood test was four days ago, and we have not received confirmation of the next appointment."
+
 YASER converts the message into structured information:
-•	New symptom reported: fever
-•	Last laboratory monitoring: four days ago
-•	Next appointment: unknown
-•	Access/follow-up disruption: possible
-The system generates a continuity alert and routes the case to a human health worker according to the configured workflow. The system does not independently recommend treatment.
-7. Technology Architecture
-The MVP will use a lightweight architecture designed for low-resource environments.
-•	Input: SMS, voice, and simple web/mobile interface.
-•	Arabic NLP: symptom and care-event extraction.
-•	Small classification model: continuity-risk classification.
-•	Rules and safety layer: predefined escalation and red-flag checks.
-•	Local/offline storage: temporary storage when connectivity is unavailable.
-•	Synchronization: upload when connectivity returns.
-•	Health-worker dashboard: patient timeline, alerts, explanations, and follow-up status.
-The MVP can begin with a lightweight classifier such as TF-IDF plus Logistic Regression and evolve toward more capable Arabic models after validation. The technical choice will be driven by accuracy, latency, privacy, and resource constraints.
-8. Responsible AI and Safety
-•	YASER is an assistive care-coordination tool, not an autonomous clinical decision-maker.
-•	Clinical decisions remain with qualified health professionals.
-•	The system will display the reasons for a continuity alert.
-•	Only minimum necessary patient information should be processed.
-•	Real patient data should only be used with appropriate authorization, privacy safeguards, and ethical oversight.
-•	The hackathon prototype will use synthetic or appropriately permitted data rather than claiming access to confidential patient records.
-•	Performance will be evaluated for Arabic-language errors and potential bias before any real-world deployment.
-9. Data Strategy
-For the hackathon MVP, the team will create a synthetic pediatric leukemia care dataset representing realistic care-pathway events. Scenarios will include stable follow-up, missed appointments, delayed laboratory monitoring, medication uncertainty, pending referrals, and new reported symptoms. The dataset will be clearly labeled as synthetic.
-A later pilot would require collaboration with an authorized health institution, appropriate governance, informed consent where applicable, de-identification, security controls, and ethics review.
-10. MVP to Build During the Hackathon
-•	Arabic SMS intake and response flow.
-•	Simple voice-to-text demonstration.
-•	Synthetic pediatric leukemia patient records.
-•	Patient care timeline.
-•	Continuity-risk classifier.
-•	Explainable alert showing why a case was flagged.
-•	Health-worker dashboard.
-•	Offline/local storage demonstration.
-•	End-to-end demo from caregiver message to human-review alert.
-11. Success Metrics for the Prototype
-The following are prototype targets to be measured during development; they are not pre-established clinical results.
-Metric	What will be measured	Purpose
-Information extraction accuracy	Correct extraction of key care events	Assess Arabic NLP
-Risk classification performance	Precision/recall on synthetic test cases	Assess model utility
-Alert explanation coverage	Percentage of alerts with traceable reasons	Support transparency
-Offline functionality	Successful operation without live connectivity	Test constrained environment
-Workflow completion	Successful caregiver-to-health-worker flow	Assess usability
-12. Development Roadmap
-Phase 1 – Hackathon: Pediatric leukemia; Arabic; SMS/voice; offline MVP; human review.
-Phase 2: Expand to other pediatric cancers and improve clinical workflow integration.
-Phase 3: Expand to other blood cancers and additional cancer-care pathways.
-Phase 4: Pilot in authorized low-resource or crisis-affected health settings.
-Phase 5: Adapt and scale the architecture to multiple countries and health systems.
-13. Scalability
-YASER is designed around a reusable care-continuity architecture rather than a single disease model. The first deployment focuses narrowly on pediatric leukemia to keep the problem measurable and the MVP feasible. The same architecture can later support other cancer pathways by changing the relevant clinical workflow, data fields, and safety rules.
-14. Why Palestine?
-Palestine is the project's initial design environment. The system is designed around constraints that can affect continuity of care in crisis-affected settings: intermittent connectivity, mobility barriers, constrained resources, fragmented referrals, and the need for simple communication channels. The ambition is not to build a system only for Palestine, but to develop a model that can be adapted to other low-resource and crisis-affected contexts.
-15. Expected Development Impact
-•	Help health workers identify disrupted follow-up earlier.
-•	Make care-pathway information easier to organize.
-•	Support communication through basic phones and low-bandwidth channels.
-•	Reduce dependence on continuous internet connectivity for the coordination layer.
-•	Provide a transparent, human-supervised AI workflow.
-•	Create a reusable architecture for other cancer-care pathways.
-16. One-Sentence Value Proposition
-YASER AI helps keep pediatric leukemia care connected when connectivity, mobility, and healthcare access are disrupted.
-17. 30-Second Pitch
-A child's cancer treatment should not depend on whether a family can maintain a stable internet connection, reach a hospital, or keep track of a disrupted care pathway. YASER is a Palestinian Small AI system designed to help families and health workers maintain continuity of care for children with leukemia through SMS, voice, and offline-capable tools. It identifies potential gaps in follow-up and routes appropriate cases to human health workers. It does not diagnose cancer or replace clinicians. We start with pediatric leukemia as a focused use case in Palestine, then expand the architecture to other cancers and crisis-affected health systems.
-18. Important Scope Statement
-YASER is a prototype concept for care coordination. It must not be used for independent diagnosis, medication dosing, treatment selection, or emergency medical decision-making without validation, clinical governance, regulatory review, and appropriate deployment safeguards.
-19. Evidence and References
-•	World Health Organization (WHO) – occupied Palestinian territory health emergency and oncology-related reporting: https://www.emro.who.int/
-•	World Bank – Global AI & Digital Summit 2026 / Small AI for Development Challenge information: https://www.worldbank.org/
-•	International Agency for Research on Cancer (IARC), GLOBOCAN: https://gco.iarc.who.int/
-•	Palestinian Ministry of Health: https://www.moh.ps/
+
+```text
+New symptom
+    → Fever
+
+Laboratory monitoring
+    → Last test: 4 days ago
+
+Appointment
+    → Next appointment unknown
+
+Care access
+    → Possible follow-up disruption
+```
+
+The system generates a **continuity alert** and routes the case to an authorized health worker according to the configured workflow.
+
+### Important
+
+YASER does **not** independently recommend treatment.
+
+---
+
+# Technology Architecture
+
+The MVP is designed around lightweight technologies suitable for low-resource environments.
+
+```text
+┌──────────────────────────────────────┐
+│             User Layer               │
+│                                      │
+│       SMS │ Voice │ Web / Mobile     │
+└──────────────────┬───────────────────┘
+                   │
+                   ▼
+┌──────────────────────────────────────┐
+│          Arabic NLP Layer             │
+│                                      │
+│  Message Processing │ Event Extraction│
+└──────────────────┬───────────────────┘
+                   │
+                   ▼
+┌──────────────────────────────────────┐
+│       Small AI Classification         │
+│                                      │
+│       Continuity Risk Detection       │
+└──────────────────┬───────────────────┘
+                   │
+                   ▼
+┌──────────────────────────────────────┐
+│       Rules & Safety Layer            │
+│                                      │
+│   Red Flags │ Escalation │ Validation │
+└──────────────────┬───────────────────┘
+                   │
+                   ▼
+┌──────────────────────────────────────┐
+│          Care Database                │
+│                                      │
+│ Patient │ Timeline │ Events │ Alerts  │
+└──────────────────┬───────────────────┘
+                   │
+                   ▼
+┌──────────────────────────────────────┐
+│       Health Worker Dashboard         │
+│                                      │
+│ Timeline │ Alerts │ Reasons │ Status  │
+└──────────────────────────────────────┘
+```
+
+### Planned MVP Components
+
+* **Input:** SMS, voice, simple web/mobile interface
+* **Arabic NLP:** Care-event and symptom extraction
+* **Machine Learning:** Lightweight continuity-risk classifier
+* **Rules:** Predefined safety and escalation rules
+* **Storage:** Local/offline-capable storage
+* **Synchronization:** Sync when connectivity becomes available
+* **Dashboard:** Patient timeline, alerts, explanations, and follow-up status
+
+The initial classifier can use lightweight approaches such as:
+
+```text
+TF-IDF
+   +
+Logistic Regression
+```
+
+The architecture can later evolve toward more capable Arabic-language models after validation.
+
+Model selection will consider:
+
+* Accuracy
+* Latency
+* Privacy
+* Computational requirements
+* Explainability
+* Resource constraints
+
+---
+
+# Offline-First Design
+
+YASER is designed for environments where reliable connectivity cannot be assumed.
+
+```text
+ONLINE
+   │
+   ▼
+Receive → Process → Store → Sync
+
+OFFLINE
+   │
+   ▼
+Receive → Local Storage
+             │
+             │ Connectivity restored
+             ▼
+           Sync
+             │
+             ▼
+         Health Worker
+```
+
+This allows the coordination layer to continue functioning even when internet connectivity is temporarily unavailable.
+
+---
+
+# Responsible AI & Safety
+
+YASER is intentionally designed as an **assistive care-coordination system**, not an autonomous clinical decision-maker.
+
+### Safety principles
+
+* Clinical decisions remain with qualified health professionals.
+* YASER does not diagnose leukemia.
+* YASER does not prescribe medication.
+* YASER does not determine treatment plans.
+* YASER does not provide autonomous emergency medical decisions.
+* Alerts include the information that triggered them.
+* Only necessary patient information should be processed.
+* Real patient data should only be used with appropriate authorization and safeguards.
+* The hackathon prototype uses synthetic or appropriately permitted data.
+* Arabic-language performance and potential bias should be evaluated before real-world deployment.
+
+---
+
+# Data Strategy
+
+For the hackathon MVP, the project uses a **synthetic pediatric leukemia care dataset**.
+
+The dataset represents realistic care-pathway scenarios such as:
+
+* Stable follow-up
+* Missed appointments
+* Delayed laboratory monitoring
+* Medication uncertainty
+* Pending referrals
+* New reported symptoms
+
+The synthetic dataset will be clearly identified as such.
+
+### Future Pilot
+
+A real-world pilot would require:
+
+* Authorized healthcare institution
+* Appropriate data governance
+* Privacy and security controls
+* De-identification where appropriate
+* Informed consent where applicable
+* Ethics review
+* Clinical oversight
+* Regulatory compliance
+
+---
+
+# MVP Scope
+
+The hackathon MVP will demonstrate an end-to-end workflow:
+
+### 1. Arabic SMS Intake
+
+A caregiver sends a message describing the child's situation.
+
+### 2. Information Extraction
+
+YASER identifies relevant care events.
+
+### 3. Patient Timeline
+
+The extracted information is added to the patient's care timeline.
+
+### 4. Risk Detection
+
+The Care Continuity Risk Engine identifies potential gaps.
+
+### 5. Explainable Alert
+
+The system shows why the case was flagged.
+
+### 6. Human Review
+
+An authorized health worker receives and reviews the alert.
+
+### 7. Offline Demonstration
+
+The system demonstrates local operation and synchronization after connectivity is restored.
+
+---
+
+# Prototype Success Metrics
+
+These are **development targets**, not established clinical results.
+
+| Metric                          | What is Measured                               | Purpose                       |
+| ------------------------------- | ---------------------------------------------- | ----------------------------- |
+| Information Extraction Accuracy | Correct extraction of care events              | Evaluate Arabic NLP           |
+| Risk Classification             | Precision / recall on synthetic cases          | Evaluate model utility        |
+| Alert Explanation Coverage      | Alerts with traceable reasons                  | Support transparency          |
+| Offline Functionality           | Successful operation without live connectivity | Test constrained environments |
+| Workflow Completion             | Caregiver-to-health-worker flow                | Assess usability              |
+
+---
+
+# Development Roadmap
+
+### Phase 1 — Hackathon MVP
+
+* Pediatric leukemia
+* Arabic language
+* SMS / voice
+* Offline-capable workflow
+* Synthetic data
+* Human review
+
+### Phase 2 — Workflow Expansion
+
+Expand to additional pediatric cancer pathways and improve healthcare workflow integration.
+
+### Phase 3 — Broader Cancer Care
+
+Adapt the architecture to other blood cancers and cancer-care pathways.
+
+### Phase 4 — Authorized Pilot
+
+Test the system in an appropriately governed low-resource or crisis-affected healthcare setting.
+
+### Phase 5 — Multi-Context Scaling
+
+Adapt the architecture to different countries, languages, and healthcare systems.
+
+---
+
+# Scalability
+
+YASER is designed as a **reusable care-continuity architecture**, rather than a single-disease model.
+
+The first implementation focuses on pediatric leukemia to keep the MVP:
+
+* Focused
+* Measurable
+* Feasible
+* Clinically bounded
+
+The underlying architecture can later be adapted by changing:
+
+* Clinical workflows
+* Relevant data fields
+* Care-event definitions
+* Safety rules
+* Escalation protocols
+
+---
+
+# Why Palestine?
+
+Palestine is the project's initial design environment.
+
+The project is informed by challenges that can affect continuity of care in crisis-affected settings, including:
+
+* Intermittent connectivity
+* Mobility constraints
+* Limited resources
+* Fragmented referrals
+* Disrupted healthcare access
+* Dependence on simple communication channels
+
+The objective is **not** to build a system exclusively for Palestine.
+
+Instead, Palestine provides the initial environment for developing and testing a model that can potentially be adapted to other low-resource and crisis-affected contexts.
+
+---
+
+# Expected Development Impact
+
+YASER aims to:
+
+* Help health workers identify disrupted follow-up earlier
+* Organize care-pathway information
+* Support communication through basic phones
+* Reduce dependence on continuous internet connectivity
+* Provide transparent human-supervised AI workflows
+* Create a reusable architecture for cancer-care coordination
+
+---
+
+# Project Scope & Limitations
+
+YASER is currently a **prototype concept / hackathon MVP**.
+
+It should **not** be used for:
+
+* Independent diagnosis
+* Medication dosing
+* Treatment selection
+* Autonomous emergency decisions
+* Clinical deployment without validation
+
+Real-world deployment would require appropriate:
+
+* Clinical validation
+* Healthcare partnerships
+* Ethics review
+* Data governance
+* Security controls
+* Regulatory review
+* Human oversight
+
+---
+
+# One-Sentence Value Proposition
+
+> **YASER AI helps keep pediatric leukemia care connected when connectivity, mobility, and healthcare access are disrupted.**
+
+---
+
+# 30-Second Pitch
+
+> A child's cancer treatment should not depend on whether a family can maintain a stable internet connection, reach a hospital, or keep track of a disrupted care pathway.
+>
+> **YASER AI** is a Palestinian Small AI system designed to help families and health workers maintain continuity of care for children with leukemia through SMS, voice, and offline-capable tools.
+>
+> It identifies potential gaps in follow-up and routes appropriate cases to human health workers. It does not diagnose cancer or replace clinicians.
+>
+> We start with pediatric leukemia as a focused use case in Palestine, then aim to adapt the architecture to other cancers and crisis-affected health systems.
+
+---
+
+# Evidence & References
+
+* [World Health Organization – Eastern Mediterranean Region](https://www.emro.who.int/)
+* [World Bank](https://www.worldbank.org/)
+* [International Agency for Research on Cancer – GLOBOCAN](https://gco.iarc.who.int/)
+* [Palestinian Ministry of Health](https://www.moh.ps/)
+
+---
+
+# Project Status
+
+**Current stage:** Hackathon MVP / Prototype
+
+**Focus:** Health · Small AI · Pediatric Leukemia · Care Continuity · Arabic NLP · Offline AI · Responsible AI
+
+---
+
+## Disclaimer
+
+YASER AI is a research and development prototype. It is not a medical device and should not be used to make independent clinical decisions. Any future clinical deployment requires appropriate validation, clinical governance, ethical oversight, privacy protection, security controls, and regulatory approval.
