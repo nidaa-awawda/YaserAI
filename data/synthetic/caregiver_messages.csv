@@ -1,0 +1,30 @@
+text,label
+"Everything is stable and the appointment is confirmed.",LOW_REVIEW
+"The child is doing well and the next visit is confirmed.",LOW_REVIEW
+"No problems today. Appointment confirmed.",LOW_REVIEW
+"The child is stable and we have no concerns.",LOW_REVIEW
+"The next appointment is confirmed for next week.",LOW_REVIEW
+"The child is doing well and the medication is available.",LOW_REVIEW
+"We have contacted the clinic and everything is fine.",LOW_REVIEW
+"The follow-up visit is confirmed.",LOW_REVIEW
+"The next appointment is not confirmed.",MEDIUM_REVIEW
+"We are waiting for appointment confirmation.",MEDIUM_REVIEW
+"The referral is still pending.",MEDIUM_REVIEW
+"The pharmacy does not have the medication.",MEDIUM_REVIEW
+"The last blood test was five days ago.",MEDIUM_REVIEW
+"There is a network problem and we cannot contact the hospital.",MEDIUM_REVIEW
+"We are having difficulty reaching the clinic.",MEDIUM_REVIEW
+"The medication is currently unavailable.",MEDIUM_REVIEW
+"We have not received confirmation for the next visit.",MEDIUM_REVIEW
+"The referral has been delayed.",MEDIUM_REVIEW
+"The last laboratory test was six days ago.",MEDIUM_REVIEW
+"The child has a fever and the appointment is not confirmed.",HIGH_REVIEW
+"The child has bleeding and the medication is unavailable.",HIGH_REVIEW
+"The last blood test was ten days ago and the appointment is not confirmed.",HIGH_REVIEW
+"The child has vomiting and the referral is pending.",HIGH_REVIEW
+"The child has a fever and we cannot contact the hospital.",HIGH_REVIEW
+"The child has fever and the medication is unavailable.",HIGH_REVIEW
+"The child has bleeding and the appointment is not confirmed.",HIGH_REVIEW
+"The child has vomiting and the appointment is delayed.",HIGH_REVIEW
+"The child has fever and the last blood test was ten days ago.",HIGH_REVIEW
+"The child has bleeding and the referral is still pending.",HIGH_REVIEW

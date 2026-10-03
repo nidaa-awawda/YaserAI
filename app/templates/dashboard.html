@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        YASER AI | Care Continuity
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="/static/css/style.css"
+    >
+
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+    <!-- ================================================= -->
+    <!-- HEADER -->
+    <!-- ================================================= -->
+
+    <header class="topbar">
+
+        <div class="brand-area">
+
+            <div class="brand">
+                YASER<span>AI</span>
+            </div>
+
+            <div class="brand-subtitle">
+                Small AI for Care Continuity
+            </div>
+
+        </div>
+
+
+        <div class="system-status">
+
+            <span class="online-dot"></span>
+
+            SYSTEM ONLINE
+
+        </div>
+
+    </header>
+
+
+    <!-- ================================================= -->
+    <!-- MAIN -->
+    <!-- ================================================= -->
+
+    <main class="container">
+
+
+        <!-- ================================================= -->
+        <!-- HERO -->
+        <!-- ================================================= -->
+
+        <section class="hero">
+
+            <div>
+
+                <div class="eyebrow">
+                    CARE CONTINUITY INTELLIGENCE
+                </div>
+
+                <h1>
+                    Supporting continuity of care
+                    with lightweight AI.
+                </h1>
+
+                <p>
+                    YASER AI analyzes caregiver messages,
+                    identifies potential continuity gaps,
+                    and prioritizes cases for authorized
+                    human review.
+                </p>
+
+            </div>
+
+
+            <div class="hero-badge">
+
+                <div class="hero-badge-title">
+                    HUMAN-IN-THE-LOOP
+                </div>
+
+                <div>
+                    AI supports review.
+                    Humans make decisions.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- STATS -->
+        <!-- ================================================= -->
+
+        <section class="stats-grid">
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    REGISTERED PATIENTS
+                </div>
+
+                <div class="stat-number">
+                    {{ patients_count }}
+                </div>
+
+                <div class="stat-caption">
+                    Care continuity records
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    OPEN ALERTS
+                </div>
+
+                <div class="stat-number">
+                    {{ open_alerts }}
+                </div>
+
+                <div class="stat-caption">
+                    Awaiting review
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    HIGH REVIEW
+                </div>
+
+                <div class="stat-number">
+                    {{ high_alerts }}
+                </div>
+
+                <div class="stat-caption">
+                    Priority review signals
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- DEMO WORKSPACE -->
+        <!-- ================================================= -->
+
+        <section class="workspace-grid">
+
+
+            <!-- PATIENT FORM -->
+
+            <div class="panel">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <div class="section-kicker">
+                            STEP 01
+                        </div>
+
+                        <h2>
+                            Patient Registration
+                        </h2>
+
+                    </div>
+
+                    <span class="step-badge">
+                        PATIENT
+                    </span>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Patient Name
+                    </label>
+
+                    <input
+                        id="patientName"
+                        type="text"
+                        placeholder="Example: Ahmad"
+                    >
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>
+                            Age
+                        </label>
+
+                        <input
+                            id="patientAge"
+                            type="number"
+                            min="0"
+                            max="18"
+                            placeholder="8"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Care Pathway
+                        </label>
+
+                        <input
+                            id="patientDiagnosis"
+                            type="text"
+                            value="Pediatric leukemia care"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="primary-button"
+                    onclick="createPatient()"
+                >
+                    CREATE PATIENT
+                </button>
+
+
+                <div
+                    id="patientMessage"
+                    class="form-message hidden"
+                ></div>
+
+
+            </div>
+
+
+            <!-- CAREGIVER MESSAGE -->
+
+            <div class="panel">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <div class="section-kicker">
+                            STEP 02
+                        </div>
+
+                        <h2>
+                            Caregiver Message
+                        </h2>
+
+                    </div>
+
+                    <span class="step-badge">
+                        INPUT
+                    </span>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Select Patient
+                    </label>
+
+                    <select id="patientSelect">
+
+                        <option value="">
+                            Select a patient
+                        </option>
+
+                        {% for patient in patients %}
+
+                        <option value="{{ patient.id }}">
+
+                            #{{ patient.id }}
+                            —
+                            {{ patient.name }}
+
+                            {% if patient.age %}
+                            — {{ patient.age }} years
+                            {% endif %}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Caregiver message
+                    </label>
+
+                    <textarea
+                        id="caregiverMessage"
+                        placeholder="Example: The child has fever and the appointment is not confirmed."
+                    ></textarea>
+
+                </div>
+
+
+                <div class="button-row">
+
+                    <button
+                        class="primary-button"
+                        onclick="analyzeAndCreateAlert()"
+                    >
+                        ANALYZE & CREATE ALERT
+                    </button>
+
+                    <button
+                        class="secondary-button"
+                        onclick="loadDemoMessage()"
+                    >
+                        LOAD DEMO
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="analysisError"
+                    class="error-box hidden"
+                ></div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- ANALYSIS -->
+        <!-- ================================================= -->
+
+        <section
+            id="analysisPanel"
+            class="panel hidden"
+        >
+
+            <div class="section-header">
+
+                <div>
+
+                    <div class="section-kicker">
+                        STEP 03
+                    </div>
+
+                    <h2>
+                        YASER AI Analysis
+                    </h2>
+
+                    <p>
+                        Lightweight ML + transparent safety rules
+                    </p>
+
+                </div>
+
+                <div class="ai-chip">
+                    AI ANALYSIS COMPLETE
+                </div>
+
+            </div>
+
+
+            <!-- RESULT CARDS -->
+
+            <div class="result-grid">
+
+
+                <div class="result-card priority-card">
+
+                    <div class="result-label">
+                        FINAL REVIEW PRIORITY
+                    </div>
+
+                    <div
+                        id="finalPriority"
+                        class="priority-value"
+                    >
+                        —
+                    </div>
+
+                    <div class="result-note">
+                        Human review required
+                    </div>
+
+                </div>
+
+
+                <div class="result-card">
+
+                    <div class="result-label">
+                        ML PREDICTION
+                    </div>
+
+                    <div
+                        id="mlPrediction"
+                        class="result-value"
+                    >
+                        —
+                    </div>
+
+                </div>
+
+
+                <div class="result-card">
+
+                    <div class="result-label">
+                        ML CONFIDENCE
+                    </div>
+
+                    <div
+                        id="mlConfidence"
+                        class="result-value"
+                    >
+                        —
+                    </div>
+
+                </div>
+
+
+                <div class="result-card">
+
+                    <div class="result-label">
+                        RULE SCORE
+                    </div>
+
+                    <div
+                        id="ruleScore"
+                        class="result-value"
+                    >
+                        —
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- DETECTED -->
+
+            <div class="analysis-columns">
+
+
+                <div class="analysis-box">
+
+                    <h3>
+                        Detected Information
+                    </h3>
+
+                    <div
+                        id="detectedInformation"
+                        class="detected-list"
+                    ></div>
+
+                </div>
+
+
+                <div class="analysis-box">
+
+                    <h3>
+                        Review Reasons
+                    </h3>
+
+                    <ul
+                        id="reasonsList"
+                        class="reasons-list"
+                    ></ul>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- SAFETY -->
+
+            <div class="safety-panel">
+
+                <div class="safety-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <div class="safety-title">
+                        RESPONSIBLE AI SAFETY LAYER
+                    </div>
+
+                    <p>
+                        YASER AI does not diagnose disease,
+                        prescribe medication, select treatment,
+                        or replace clinicians.
+                    </p>
+
+                    <strong>
+                        Final decisions remain with authorized
+                        health workers.
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="alertCreated"
+                class="success-box hidden"
+            ></div>
+
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- PROCESSING PATHWAY -->
+        <!-- ================================================= -->
+
+        <section class="panel">
+
+            <div class="section-header">
+
+                <div>
+
+                    <div class="section-kicker">
+                        SYSTEM ARCHITECTURE
+                    </div>
+
+                    <h2>
+                        Care Continuity Pathway
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="pathway">
+
+
+                <div class="path-node">
+
+                    <span>01</span>
+
+                    Caregiver
+
+                    <small>
+                        SMS / Voice / Web
+                    </small>
+
+                </div>
+
+
+                <div class="path-arrow">
+                    →
+                </div>
+
+
+                <div class="path-node">
+
+                    <span>02</span>
+
+                    Lightweight NLP
+
+                    <small>
+                        Information extraction
+                    </small>
+
+                </div>
+
+
+                <div class="path-arrow">
+                    →
+                </div>
+
+
+                <div class="path-node">
+
+                    <span>03</span>
+
+                    ML Engine
+
+                    <small>
+                        Review classification
+                    </small>
+
+                </div>
+
+
+                <div class="path-arrow">
+                    →
+                </div>
+
+
+                <div class="path-node">
+
+                    <span>04</span>
+
+                    Safety Layer
+
+                    <small>
+                        Transparent rules
+                    </small>
+
+                </div>
+
+
+                <div class="path-arrow">
+                    →
+                </div>
+
+
+                <div class="path-node human-node">
+
+                    <span>05</span>
+
+                    Health Worker
+
+                    <small>
+                        Human review
+                    </small>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- PATIENTS -->
+        <!-- ================================================= -->
+
+        <section class="panel">
+
+            <div class="section-header">
+
+                <div>
+
+                    <div class="section-kicker">
+                        PATIENTS
+                    </div>
+
+                    <h2>
+                        Registered Patients
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                ID
+                            </th>
+
+                            <th>
+                                Patient
+                            </th>
+
+                            <th>
+                                Age
+                            </th>
+
+                            <th>
+                                Care Pathway
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for patient in patients %}
+
+                        <tr>
+
+                            <td>
+                                #{{ patient.id }}
+                            </td>
+
+                            <td>
+                                {{ patient.name }}
+                            </td>
+
+                            <td>
+                                {{ patient.age or "—" }}
+                            </td>
+
+                            <td>
+                                {{ patient.diagnosis or "—" }}
+                            </td>
+
+                        </tr>
+
+                        {% else %}
+
+                        <tr>
+
+                            <td
+                                colspan="4"
+                                class="empty"
+                            >
+                                No patients registered yet.
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- ALERTS -->
+        <!-- ================================================= -->
+
+        <section class="panel">
+
+            <div class="section-header">
+
+                <div>
+
+                    <div class="section-kicker">
+                        REVIEW QUEUE
+                    </div>
+
+                    <h2>
+                        Care Continuity Alerts
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Alert
+                            </th>
+
+                            <th>
+                                Patient
+                            </th>
+
+                            <th>
+                                Priority
+                            </th>
+
+                            <th>
+                                Score
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for alert in alerts %}
+
+                        <tr>
+
+                            <td>
+                                #{{ alert.id }}
+                            </td>
+
+                            <td>
+                                Patient #{{ alert.patient_id }}
+                            </td>
+
+                            <td>
+
+                                <span
+                                    class="priority-badge {{ alert.priority|lower }}"
+                                >
+                                    {{ alert.priority }}
+                                </span>
+
+                            </td>
+
+                            <td>
+                                {{ alert.score }}
+                            </td>
+
+                            <td>
+                                {{ alert.status }}
+                            </td>
+
+                        </tr>
+
+                        {% else %}
+
+                        <tr>
+
+                            <td
+                                colspan="5"
+                                class="empty"
+                            >
+                                No alerts created yet.
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- SAFETY -->
+        <!-- ================================================= -->
+
+        <section class="responsible-ai">
+
+            <div class="responsible-title">
+                RESPONSIBLE AI
+            </div>
+
+            <h2>
+                Designed to support humans,
+                not replace them.
+            </h2>
+
+            <div class="responsible-grid">
+
+                <div>
+                    <strong>
+                        ✓ Human-in-the-loop
+                    </strong>
+
+                    <p>
+                        Every review priority is intended
+                        for authorized human assessment.
+                    </p>
+                </div>
+
+
+                <div>
+                    <strong>
+                        ✓ Transparent reasoning
+                    </strong>
+
+                    <p>
+                        The system displays the signals
+                        and rules contributing to the priority.
+                    </p>
+                </div>
+
+
+                <div>
+                    <strong>
+                        ✓ Non-diagnostic
+                    </strong>
+
+                    <p>
+                        YASER AI does not diagnose,
+                        prescribe, or select treatment.
+                    </p>
+                </div>
+
+
+                <div>
+                    <strong>
+                        ✓ Low-resource oriented
+                    </strong>
+
+                    <p>
+                        The architecture is designed around
+                        lightweight models and low-connectivity
+                        workflows.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- ================================================= -->
+    <!-- FOOTER -->
+    <!-- ================================================= -->
+
+    <footer>
+
+        <div>
+            <strong>
+                YASER AI
+            </strong>
+
+            <span>
+                Small AI for Care Continuity
+            </span>
+        </div>
+
+        <div>
+            Prototype • Synthetic Data • Human Review
+        </div>
+
+    </footer>
+
+
+</div>
+
+
+<script
+    src="/static/js/dashboard.js"
+></script>
+
+</body>
+
+</html>
