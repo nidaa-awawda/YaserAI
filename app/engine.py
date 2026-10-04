@@ -1,480 +1,139 @@
-import re
+from .nlp import extract_signals
+from .ml_engine import predict_review_priority
 
-from typing import Dict
-from typing import Any
 
-from .ml_engine import (
-    predict_review_priority
-)
-
-
-SYMPTOMS = [
-    "fever",
-    "bleeding",
-    "pain",
-    "vomiting",
-    "fatigue"
-]
-
-
-def extract_information(
-    text: str
-) -> Dict[str, Any]:
-
-    text_lower = text.lower()
-
-    extracted = {
-
-        "symptoms": [],
-
-        "lab_days_ago": None,
-
-        "appointment_status": None,
-
-        "medication_status": None,
-
-        "referral_status": None,
-
-        "connectivity_issue": False,
-
-    }
-
-
-    for symptom in SYMPTOMS:
-
-        if symptom in text_lower:
-
-            extracted[
-                "symptoms"
-            ].append(symptom)
-
-
-    lab_patterns = [
-
-        r"blood test.*?(\d+)\s*days?",
-
-        r"laboratory test.*?(\d+)\s*days?",
-
-        r"lab.*?(\d+)\s*days?",
-
-    ]
-
-
-    for pattern in lab_patterns:
-
-        match = re.search(
-            pattern,
-            text_lower
-        )
-
-        if match:
-
-            extracted[
-                "lab_days_ago"
-            ] = int(
-                match.group(1)
-            )
-
-            break
-
-
-    if (
-        "appointment" in text_lower
-        and (
-            "not confirmed"
-            in text_lower
-            or "unconfirmed"
-            in text_lower
-            or "waiting"
-            in text_lower
-            or "delayed"
-            in text_lower
-        )
-    ):
-
-        extracted[
-            "appointment_status"
-        ] = "not_confirmed"
-
-    elif (
-        "appointment" in text_lower
-        and "confirmed" in text_lower
-    ):
-
-        extracted[
-            "appointment_status"
-        ] = "confirmed"
-
-
-    if (
-        "medication" in text_lower
-        or "medicine" in text_lower
-        or "pharmacy" in text_lower
-    ):
-
-        if (
-            "unavailable" in text_lower
-            or "does not have" in text_lower
-            or "not available" in text_lower
-            or "out of stock" in text_lower
-        ):
-
-            extracted[
-                "medication_status"
-            ] = "unavailable"
-
-        elif "available" in text_lower:
-
-            extracted[
-                "medication_status"
-            ] = "available"
-
-
-    if "referral" in text_lower:
-
-        if (
-            "pending" in text_lower
-            or "delayed" in text_lower
-        ):
-
-            extracted[
-                "referral_status"
-            ] = "pending"
-
-        else:
-
-            extracted[
-                "referral_status"
-            ] = "mentioned"
-
-
-    connectivity_words = [
-
-        "network problem",
-
-        "cannot contact",
-
-        "can't contact",
-
-        "unable to contact",
-
-        "no network",
-
-        "connectivity",
-
-    ]
-
-
-    for phrase in connectivity_words:
-
-        if phrase in text_lower:
-
-            extracted[
-                "connectivity_issue"
-            ] = True
-
-            break
-
-
-    return extracted
-
-
-def calculate_rule_score(
-    extracted: Dict[str, Any]
-):
-
+def calculate_rule_score(signals: dict) -> tuple[int, list[str]]:
     score = 0
-
     reasons = []
 
+    symptoms = signals.get("symptoms", [])
 
-    if extracted["symptoms"]:
-
+    if symptoms:
         score += 2
-
         reasons.append(
-            "Caregiver reported a symptom."
+            "A reported symptom requires human review."
         )
 
+    if signals.get("medication_unavailable"):
+        score += 2
+        reasons.append(
+            "Medication access barrier detected."
+        )
 
-    lab_days = extracted[
-        "lab_days_ago"
-    ]
+    if signals.get("appointment_not_confirmed"):
+        score += 2
+        reasons.append(
+            "Follow-up appointment is not confirmed."
+        )
 
+    if signals.get("referral_pending"):
+        score += 1
+        reasons.append(
+            "Referral is still pending."
+        )
 
-    if lab_days is not None:
+    if signals.get("connectivity_issue"):
+        score += 1
+        reasons.append(
+            "Care access or connectivity issue detected."
+        )
 
-        if lab_days >= 7:
+    if signals.get("care_interruption"):
+        score += 2
+        reasons.append(
+            "Prolonged care interruption detected."
+        )
 
+    duration_weeks = signals.get("duration_weeks")
+
+    if duration_weeks is not None:
+        if duration_weeks >= 2:
             score += 2
-
             reasons.append(
-                "Laboratory follow-up may be delayed."
+                "Care disruption has continued for two or more weeks."
             )
-
-        elif lab_days >= 4:
-
+        elif duration_weeks >= 1:
             score += 1
-
             reasons.append(
-                "Laboratory follow-up is several days old."
+                "Care disruption has continued for at least one week."
             )
 
-
-    if (
-        extracted[
-            "appointment_status"
-        ]
-        == "not_confirmed"
-    ):
-
-        score += 2
-
-        reasons.append(
-            "Appointment is not confirmed."
-        )
+    return score, reasons
 
 
-    if (
-        extracted[
-            "medication_status"
-        ]
-        == "unavailable"
-    ):
-
-        score += 2
-
-        reasons.append(
-            "Medication access may be disrupted."
-        )
-
-
-    if (
-        extracted[
-            "referral_status"
-        ]
-        == "pending"
-    ):
-
-        score += 1
-
-        reasons.append(
-            "Referral is pending or delayed."
-        )
-
-
-    if extracted[
-        "connectivity_issue"
-    ]:
-
-        score += 1
-
-        reasons.append(
-            "Connectivity or communication problem detected."
-        )
-
-
+def priority_from_score(score: int) -> str:
     if score >= 5:
+        return "HIGH_REVIEW"
 
-        priority = "HIGH_REVIEW"
+    if score >= 2:
+        return "MEDIUM_REVIEW"
 
-    elif score >= 2:
-
-        priority = "MEDIUM_REVIEW"
-
-    else:
-
-        priority = "LOW_REVIEW"
+    return "LOW_REVIEW"
 
 
-    return (
-        score,
-        priority,
-        reasons
-    )
+def merge_priorities(
+    rule_priority: str,
+    ml_prediction: str | None
+) -> str:
+
+    priority_order = {
+        "LOW_REVIEW": 0,
+        "MEDIUM_REVIEW": 1,
+        "HIGH_REVIEW": 2,
+    }
+
+    if ml_prediction not in priority_order:
+        return rule_priority
+
+    if priority_order[ml_prediction] > priority_order[rule_priority]:
+        return ml_prediction
+
+    return rule_priority
 
 
-PRIORITY_LEVEL = {
+def process_message(text: str) -> dict:
+    text = str(text).strip()
 
-    "LOW_REVIEW": 1,
-
-    "MEDIUM_REVIEW": 2,
-
-    "HIGH_REVIEW": 3,
-
-}
-
-
-def highest_priority(
-    first: str,
-    second: str
-):
-
-    if (
-        PRIORITY_LEVEL.get(
-            first,
-            0
-        )
-        >=
-        PRIORITY_LEVEL.get(
-            second,
-            0
-        )
-    ):
-
-        return first
-
-    return second
-
-
-def process_message(
-    text: str
-) -> Dict[str, Any]:
-
-    if not text or not text.strip():
-
+    if not text:
         return {
-
-            "score": 0,
-
+            "language": "en",
             "priority": "LOW_REVIEW",
-
-            "reasons": [
-                "No caregiver message provided."
-            ],
-
+            "score": 0,
+            "reasons": [],
             "extracted_data": {},
-
-            "ml_prediction": None,
-
-            "ml_confidence": None,
-
-            "ml_probabilities": {},
-
-            "ml_available": False,
-
-            "human_review_required": True,
-
-            "clinical_decision": False,
-
+            "ml": {
+                "available": False,
+                "prediction": None,
+                "confidence": None,
+                "probabilities": {},
+            },
+            "human_review_required": False,
         }
 
+    signals = extract_signals(text)
 
-    extracted = extract_information(
-        text
-    )
+    rule_score, reasons = calculate_rule_score(signals)
 
+    rule_priority = priority_from_score(rule_score)
 
-    (
-        rule_score,
+    ml_result = predict_review_priority(text)
+
+    final_priority = merge_priorities(
         rule_priority,
-        rule_reasons
-    ) = calculate_rule_score(
-        extracted
+        ml_result.get("prediction")
     )
 
-
-    ml_result = predict_review_priority(
-        text
-    )
-
-
-    ml_priority = ml_result.get(
-        "prediction"
-    )
-
-    ml_confidence = ml_result.get(
-        "confidence"
-    )
-
-
-    if ml_priority:
-
-        final_priority = highest_priority(
-            rule_priority,
-            ml_priority
-        )
-
-    else:
-
-        final_priority = rule_priority
-
-
-    reasons = list(
-        rule_reasons
-    )
-
-
-    if ml_priority:
-
-        if ml_priority == final_priority:
-
-            reasons.append(
-                f"ML model classified the message as {ml_priority}."
-            )
-
-        elif (
-            PRIORITY_LEVEL.get(
-                ml_priority,
-                0
-            )
-            >
-            PRIORITY_LEVEL.get(
-                rule_priority,
-                0
-            )
-        ):
-
-            reasons.append(
-                "ML model identified a higher review priority."
-            )
-
-        else:
-
-            reasons.append(
-                "Safety rules retained or increased the review priority."
-            )
-
-    else:
-
-        reasons.append(
-            "ML model unavailable; rule-based safety layer used."
-        )
-
-
-    reasons.append(
-        "Final output is a care-continuity review priority and requires human health-worker review."
-    )
-
+    human_review_required = final_priority in {
+        "MEDIUM_REVIEW",
+        "HIGH_REVIEW",
+    }
 
     return {
-
-        "score": rule_score,
-
+        "language": signals.get("language", "en"),
         "priority": final_priority,
-
+        "score": rule_score,
         "reasons": reasons,
-
-        "extracted_data": extracted,
-
-        "ml_prediction": ml_priority,
-
-        "ml_confidence": ml_confidence,
-
-        "ml_probabilities":
-            ml_result.get(
-                "probabilities",
-                {}
-            ),
-
-        "ml_available":
-            ml_result.get(
-                "available",
-                False
-            ),
-
-        "human_review_required": True,
-
-        "clinical_decision": False,
-
+        "extracted_data": signals,
+        "ml": ml_result,
+        "human_review_required": human_review_required,
     }

@@ -1,36 +1,21 @@
 from pathlib import Path
 
-import pandas as pd
 import joblib
+import pandas as pd
 
-from sklearn.feature_extraction.text import (
-    TfidfVectorizer
-)
-
-from sklearn.linear_model import (
-    LogisticRegression
-)
-
-from sklearn.pipeline import (
-    Pipeline
-)
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import Pipeline
 
 
-BASE_DIR = (
-    Path(__file__)
-    .resolve()
-    .parent
-    .parent
-)
-
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 DATA_PATH = (
     BASE_DIR
     / "data"
     / "synthetic"
-    / "caregiver_messages.csv"
+    / "pediatric_care_cases.csv"
 )
-
 
 MODEL_PATH = (
     BASE_DIR
@@ -39,144 +24,96 @@ MODEL_PATH = (
 )
 
 
-print(
-    "Loading YASER AI dataset..."
-)
+def main():
+    print("===================================")
+    print("YASER AI MODEL TRAINING")
+    print("===================================")
 
-print(DATA_PATH)
-
-
-if not DATA_PATH.exists():
-
-    raise FileNotFoundError(
-        f"Dataset not found: {DATA_PATH}"
-    )
-
-
-data = pd.read_csv(
-    DATA_PATH
-)
-
-
-required_columns = {
-    "text",
-    "label"
-}
-
-
-if not required_columns.issubset(
-    data.columns
-):
-
-    raise ValueError(
-        "CSV must contain these columns: text, label"
-    )
-
-
-data = data.dropna(
-    subset=[
-        "text",
-        "label"
-    ]
-)
-
-
-print(
-    f"Training examples: {len(data)}"
-)
-
-
-model = Pipeline([
-
-    (
-        "tfidf",
-
-        TfidfVectorizer(
-
-            ngram_range=(1, 2),
-
-            lowercase=True
-
+    if not DATA_PATH.exists():
+        raise FileNotFoundError(
+            f"Dataset not found: {DATA_PATH}"
         )
 
-    ),
+    data = pd.read_csv(DATA_PATH)
 
-    (
+    required_columns = {
+        "caregiver_message",
+        "risk_level",
+    }
 
-        "classifier",
+    missing_columns = required_columns - set(data.columns)
 
-        LogisticRegression(
-
-            max_iter=1000,
-
-            class_weight="balanced"
-
+    if missing_columns:
+        raise ValueError(
+            f"Missing columns: {missing_columns}"
         )
 
+    data = data.dropna(
+        subset=[
+            "caregiver_message",
+            "risk_level",
+        ]
     )
 
-])
+    print(f"Training cases: {len(data)}")
+
+    print()
+    print("Class distribution:")
+
+    print(
+        data["risk_level"]
+        .value_counts()
+        .sort_index()
+    )
+
+    model = Pipeline(
+        [
+            (
+                "tfidf",
+                TfidfVectorizer(
+                    ngram_range=(1, 2),
+                    lowercase=True,
+                    min_df=1,
+                ),
+            ),
+            (
+                "classifier",
+                LogisticRegression(
+                    max_iter=2000,
+                    class_weight="balanced",
+                ),
+            ),
+        ]
+    )
+
+    model.fit(
+        data["caregiver_message"],
+        data["risk_level"],
+    )
+
+    MODEL_PATH.parent.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    joblib.dump(
+        model,
+        MODEL_PATH,
+    )
+
+    print()
+    print("===================================")
+    print("MODEL TRAINED SUCCESSFULLY")
+    print("===================================")
+    print()
+    print(f"Model saved to:")
+    print(MODEL_PATH)
+    print()
+    print("Classes:")
+
+    for label in model.classes_:
+        print(f"- {label}")
 
 
-model.fit(
-
-    data["text"],
-
-    data["label"]
-
-)
-
-
-MODEL_PATH.parent.mkdir(
-    parents=True,
-    exist_ok=True
-)
-
-
-joblib.dump(
-    model,
-    MODEL_PATH
-)
-
-
-print()
-
-print(
-    "==================================="
-)
-
-print(
-    "YASER AI MODEL TRAINED SUCCESSFULLY"
-)
-
-print(
-    "==================================="
-)
-
-print()
-
-print(
-    "Model saved to:"
-)
-
-print(
-    MODEL_PATH
-)
-
-print()
-
-print(
-    "Labels:"
-)
-
-print(
-    "LOW_REVIEW"
-)
-
-print(
-    "MEDIUM_REVIEW"
-)
-
-print(
-    "HIGH_REVIEW"
-)
+if __name__ == "__main__":
+    main()

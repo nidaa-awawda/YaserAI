@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -10,536 +9,804 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>
-        YASER AI | Care Continuity
-    </title>
+    <title>YASER AI | Care Continuity</title>
 
     <link
         rel="stylesheet"
         href="/static/css/style.css"
     >
-
 </head>
 
 
 <body>
 
-<div class="app">
+<div class="app-shell">
 
+    <!-- SIDEBAR -->
 
-    <!-- ================================================= -->
-    <!-- HEADER -->
-    <!-- ================================================= -->
+    <aside class="sidebar">
 
-    <header class="topbar">
+        <div class="brand">
 
-        <div class="brand-area">
-
-            <div class="brand">
-                YASER<span>AI</span>
+            <div class="brand-mark">
+                Y
             </div>
 
-            <div class="brand-subtitle">
-                Small AI for Care Continuity
+            <div>
+
+                <div class="brand-name">
+                    YASER AI
+                </div>
+
+                <div class="brand-subtitle">
+                    Care Continuity
+                </div>
+
             </div>
 
         </div>
 
 
-        <div class="system-status">
+        <nav class="navigation">
 
-            <span class="online-dot"></span>
+            <button
+                class="nav-item active"
+                onclick="showSection('overview', this)"
+            >
+                Overview
+            </button>
 
-            SYSTEM ONLINE
+            <button
+                class="nav-item"
+                onclick="showSection('caregiver', this)"
+            >
+                Caregiver Input
+            </button>
+
+            <button
+                class="nav-item"
+                onclick="showSection('analysis', this)"
+            >
+                AI Analysis
+            </button>
+
+            <button
+                class="nav-item"
+                onclick="showSection('health-worker', this)"
+            >
+                Health Worker
+            </button>
+
+            <button
+                class="nav-item"
+                onclick="showSection('evaluation', this)"
+            >
+                AI Evaluation
+            </button>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <div class="system-status">
+
+                <span class="status-dot"></span>
+
+                System Online
+
+            </div>
+
+            <div class="prototype-label">
+                Research Prototype
+            </div>
 
         </div>
 
-    </header>
+    </aside>
 
 
-    <!-- ================================================= -->
-    <!-- MAIN -->
-    <!-- ================================================= -->
+    <!-- MAIN CONTENT -->
 
-    <main class="container">
+    <main class="main-content">
 
+        <!-- HEADER -->
 
-        <!-- ================================================= -->
-        <!-- HERO -->
-        <!-- ================================================= -->
-
-        <section class="hero">
+        <header class="topbar">
 
             <div>
 
                 <div class="eyebrow">
-                    CARE CONTINUITY INTELLIGENCE
+                    SMALL AI FOR DEVELOPMENT
                 </div>
 
                 <h1>
-                    Supporting continuity of care
-                    with lightweight AI.
+                    Pediatric Care Continuity
                 </h1>
 
                 <p>
-                    YASER AI analyzes caregiver messages,
-                    identifies potential continuity gaps,
-                    and prioritizes cases for authorized
-                    human review.
+                    AI-assisted identification and routing
+                    of care-continuity barriers.
                 </p>
 
             </div>
 
 
-            <div class="hero-badge">
+            <div class="topbar-status">
 
-                <div class="hero-badge-title">
-                    HUMAN-IN-THE-LOOP
-                </div>
+                <span class="status-dot"></span>
 
-                <div>
-                    AI supports review.
-                    Humans make decisions.
-                </div>
+                Human-in-the-loop
 
             </div>
 
-        </section>
+        </header>
 
 
         <!-- ================================================= -->
-        <!-- STATS -->
-        <!-- ================================================= -->
-
-        <section class="stats-grid">
-
-
-            <div class="stat-card">
-
-                <div class="stat-label">
-                    REGISTERED PATIENTS
-                </div>
-
-                <div class="stat-number">
-                    {{ patients_count }}
-                </div>
-
-                <div class="stat-caption">
-                    Care continuity records
-                </div>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <div class="stat-label">
-                    OPEN ALERTS
-                </div>
-
-                <div class="stat-number">
-                    {{ open_alerts }}
-                </div>
-
-                <div class="stat-caption">
-                    Awaiting review
-                </div>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <div class="stat-label">
-                    HIGH REVIEW
-                </div>
-
-                <div class="stat-number">
-                    {{ high_alerts }}
-                </div>
-
-                <div class="stat-caption">
-                    Priority review signals
-                </div>
-
-            </div>
-
-
-        </section>
-
-
-        <!-- ================================================= -->
-        <!-- DEMO WORKSPACE -->
-        <!-- ================================================= -->
-
-        <section class="workspace-grid">
-
-
-            <!-- PATIENT FORM -->
-
-            <div class="panel">
-
-                <div class="section-header">
-
-                    <div>
-
-                        <div class="section-kicker">
-                            STEP 01
-                        </div>
-
-                        <h2>
-                            Patient Registration
-                        </h2>
-
-                    </div>
-
-                    <span class="step-badge">
-                        PATIENT
-                    </span>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Patient Name
-                    </label>
-
-                    <input
-                        id="patientName"
-                        type="text"
-                        placeholder="Example: Ahmad"
-                    >
-
-                </div>
-
-
-                <div class="form-row">
-
-                    <div class="form-group">
-
-                        <label>
-                            Age
-                        </label>
-
-                        <input
-                            id="patientAge"
-                            type="number"
-                            min="0"
-                            max="18"
-                            placeholder="8"
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Care Pathway
-                        </label>
-
-                        <input
-                            id="patientDiagnosis"
-                            type="text"
-                            value="Pediatric leukemia care"
-                        >
-
-                    </div>
-
-                </div>
-
-
-                <button
-                    class="primary-button"
-                    onclick="createPatient()"
-                >
-                    CREATE PATIENT
-                </button>
-
-
-                <div
-                    id="patientMessage"
-                    class="form-message hidden"
-                ></div>
-
-
-            </div>
-
-
-            <!-- CAREGIVER MESSAGE -->
-
-            <div class="panel">
-
-                <div class="section-header">
-
-                    <div>
-
-                        <div class="section-kicker">
-                            STEP 02
-                        </div>
-
-                        <h2>
-                            Caregiver Message
-                        </h2>
-
-                    </div>
-
-                    <span class="step-badge">
-                        INPUT
-                    </span>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Select Patient
-                    </label>
-
-                    <select id="patientSelect">
-
-                        <option value="">
-                            Select a patient
-                        </option>
-
-                        {% for patient in patients %}
-
-                        <option value="{{ patient.id }}">
-
-                            #{{ patient.id }}
-                            —
-                            {{ patient.name }}
-
-                            {% if patient.age %}
-                            — {{ patient.age }} years
-                            {% endif %}
-
-                        </option>
-
-                        {% endfor %}
-
-                    </select>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Caregiver message
-                    </label>
-
-                    <textarea
-                        id="caregiverMessage"
-                        placeholder="Example: The child has fever and the appointment is not confirmed."
-                    ></textarea>
-
-                </div>
-
-
-                <div class="button-row">
-
-                    <button
-                        class="primary-button"
-                        onclick="analyzeAndCreateAlert()"
-                    >
-                        ANALYZE & CREATE ALERT
-                    </button>
-
-                    <button
-                        class="secondary-button"
-                        onclick="loadDemoMessage()"
-                    >
-                        LOAD DEMO
-                    </button>
-
-                </div>
-
-
-                <div
-                    id="analysisError"
-                    class="error-box hidden"
-                ></div>
-
-            </div>
-
-
-        </section>
-
-
-        <!-- ================================================= -->
-        <!-- ANALYSIS -->
+        <!-- OVERVIEW -->
         <!-- ================================================= -->
 
         <section
-            id="analysisPanel"
-            class="panel hidden"
+            id="overview"
+            class="dashboard-section active-section"
         >
 
             <div class="section-header">
 
                 <div>
 
-                    <div class="section-kicker">
-                        STEP 03
-                    </div>
+                    <span class="section-kicker">
+                        COMMAND CENTER
+                    </span>
 
                     <h2>
-                        YASER AI Analysis
+                        Care Continuity Overview
                     </h2>
 
                     <p>
-                        Lightweight ML + transparent safety rules
+                        Monitor cases, review priorities,
+                        and route follow-up actions.
                     </p>
 
                 </div>
 
-                <div class="ai-chip">
-                    AI ANALYSIS COMPLETE
+
+                <button
+                    class="primary-button"
+                    onclick="showSectionById('caregiver')"
+                >
+                    Analyze Caregiver Message
+                </button>
+
+            </div>
+
+
+            <!-- STATISTICS -->
+
+            <div class="stat-grid">
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Patients
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="patients-count"
+                    >
+                        {{ patients_count }}
+                    </div>
+
+                    <div class="stat-caption">
+                        Registered prototype cases
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Open Alerts
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="open-alerts"
+                    >
+                        {{ open_alerts }}
+                    </div>
+
+                    <div class="stat-caption">
+                        Awaiting human review
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card priority-card">
+
+                    <div class="stat-label">
+                        High Priority
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="high-alerts"
+                    >
+                        {{ high_alerts }}
+                    </div>
+
+                    <div class="stat-caption">
+                        Requires attention
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        AI Status
+                    </div>
+
+                    <div class="stat-value status-value">
+                        ONLINE
+                    </div>
+
+                    <div class="stat-caption">
+                        Rule engine + Small ML
+                    </div>
+
                 </div>
 
             </div>
 
 
-            <!-- RESULT CARDS -->
+            <!-- WORKFLOW -->
 
-            <div class="result-grid">
+            <div class="panel">
 
+                <div class="panel-header">
 
-                <div class="result-card priority-card">
+                    <div>
 
-                    <div class="result-label">
-                        FINAL REVIEW PRIORITY
-                    </div>
+                        <span class="section-kicker">
+                            END-TO-END WORKFLOW
+                        </span>
 
-                    <div
-                        id="finalPriority"
-                        class="priority-value"
-                    >
-                        —
-                    </div>
+                        <h3>
+                            YASER AI Care Continuity Pathway
+                        </h3>
 
-                    <div class="result-note">
-                        Human review required
                     </div>
 
                 </div>
 
 
-                <div class="result-card">
+                <div class="workflow">
 
-                    <div class="result-label">
-                        ML PREDICTION
+                    <div class="workflow-step">
+
+                        <div class="workflow-number">
+                            01
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Caregiver
+                            </strong>
+
+                            <span>
+                                Arabic / English
+                            </span>
+
+                        </div>
+
                     </div>
 
-                    <div
-                        id="mlPrediction"
-                        class="result-value"
-                    >
-                        —
+
+                    <div class="workflow-arrow">
+                        →
+                    </div>
+
+
+                    <div class="workflow-step">
+
+                        <div class="workflow-number">
+                            02
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                AI Analysis
+                            </strong>
+
+                            <span>
+                                Signal extraction
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="workflow-arrow">
+                        →
+                    </div>
+
+
+                    <div class="workflow-step">
+
+                        <div class="workflow-number">
+                            03
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Health Worker
+                            </strong>
+
+                            <span>
+                                Human review
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="workflow-arrow">
+                        →
+                    </div>
+
+
+                    <div class="workflow-step">
+
+                        <div class="workflow-number">
+                            04
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Follow-up
+                            </strong>
+
+                            <span>
+                                Action recorded
+                            </span>
+
+                        </div>
+
                     </div>
 
                 </div>
-
-
-                <div class="result-card">
-
-                    <div class="result-label">
-                        ML CONFIDENCE
-                    </div>
-
-                    <div
-                        id="mlConfidence"
-                        class="result-value"
-                    >
-                        —
-                    </div>
-
-                </div>
-
-
-                <div class="result-card">
-
-                    <div class="result-label">
-                        RULE SCORE
-                    </div>
-
-                    <div
-                        id="ruleScore"
-                        class="result-value"
-                    >
-                        —
-                    </div>
-
-                </div>
-
 
             </div>
 
 
-            <!-- DETECTED -->
+            <!-- ALERTS -->
 
-            <div class="analysis-columns">
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <span class="section-kicker">
+                            REVIEW QUEUE
+                        </span>
+
+                        <h3>
+                            Recent Alerts
+                        </h3>
+
+                    </div>
 
 
-                <div class="analysis-box">
-
-                    <h3>
-                        Detected Information
-                    </h3>
-
-                    <div
-                        id="detectedInformation"
-                        class="detected-list"
-                    ></div>
-
-                </div>
-
-
-                <div class="analysis-box">
-
-                    <h3>
-                        Review Reasons
-                    </h3>
-
-                    <ul
-                        id="reasonsList"
-                        class="reasons-list"
-                    ></ul>
+                    <button
+                        class="secondary-button"
+                        onclick="showSectionById('health-worker')"
+                    >
+                        Open Review Queue
+                    </button>
 
                 </div>
 
+
+                <div class="alert-table">
+
+                    <div class="table-header">
+
+                        <span>
+                            Priority
+                        </span>
+
+                        <span>
+                            Patient
+                        </span>
+
+                        <span>
+                            Score
+                        </span>
+
+                        <span>
+                            Status
+                        </span>
+
+                    </div>
+
+
+                    {% for alert in alerts %}
+
+                    <div class="table-row">
+
+                        <span>
+
+                            <span
+                                class="priority-badge
+                                {% if alert.priority == 'HIGH_REVIEW' %}
+                                    high
+                                {% elif alert.priority == 'MEDIUM_REVIEW' %}
+                                    medium
+                                {% else %}
+                                    low
+                                {% endif %}"
+                            >
+
+                                {{ alert.priority }}
+
+                            </span>
+
+                        </span>
+
+
+                        <span>
+                            Patient #{{ alert.patient_id }}
+                        </span>
+
+
+                        <span>
+                            {{ alert.score }}
+                        </span>
+
+
+                        <span>
+                            {{ alert.status }}
+                        </span>
+
+                    </div>
+
+                    {% else %}
+
+                    <div class="empty-state">
+                        No alerts yet.
+                    </div>
+
+                    {% endfor %}
+
+                </div>
 
             </div>
 
+        </section>
 
-            <!-- SAFETY -->
 
-            <div class="safety-panel">
+        <!-- ================================================= -->
+        <!-- CAREGIVER -->
+        <!-- ================================================= -->
 
-                <div class="safety-icon">
-                    ✓
-                </div>
+        <section
+            id="caregiver"
+            class="dashboard-section"
+        >
+
+            <div class="section-header">
 
                 <div>
 
-                    <div class="safety-title">
-                        RESPONSIBLE AI SAFETY LAYER
-                    </div>
+                    <span class="section-kicker">
+                        STEP 01
+                    </span>
+
+                    <h2>
+                        Caregiver Input
+                    </h2>
 
                     <p>
-                        YASER AI does not diagnose disease,
-                        prescribe medication, select treatment,
-                        or replace clinicians.
+                        Enter a caregiver message in Arabic or English.
                     </p>
 
-                    <strong>
-                        Final decisions remain with authorized
-                        health workers.
-                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="demo-grid">
+
+
+                <!-- INPUT PANEL -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span class="section-kicker">
+                                CAREGIVER MESSAGE
+                            </span>
+
+                            <h3>
+                                What is happening?
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PATIENT SELECTOR -->
+
+                    <div class="patient-selector-header">
+
+                        <label class="field-label">
+                            Patient
+                        </label>
+
+
+                        <button
+                            type="button"
+                            class="add-patient-button"
+                            onclick="openPatientForm()"
+                        >
+                            + Add Patient
+                        </button>
+
+                    </div>
+
+
+                    <select
+                        id="patient-select"
+                        class="input-field"
+                    >
+
+                        <option value="">
+                            Loading patients...
+                        </option>
+
+                    </select>
+
+
+                    <!-- ADD PATIENT FORM -->
+
+                    <div
+                        id="patient-form"
+                        class="patient-form hidden"
+                    >
+
+                        <div class="patient-form-title">
+                            Add Synthetic Patient
+                        </div>
+
+
+                        <p class="patient-form-note">
+                            Prototype data only.
+                            Do not enter real patient information.
+                        </p>
+
+
+                        <label class="field-label">
+                            Patient name
+                        </label>
+
+
+                        <input
+                            id="new-patient-name"
+                            class="input-field"
+                            type="text"
+                            placeholder="Example: YASER Demo 001"
+                        >
+
+
+                        <label class="field-label">
+                            Age
+                        </label>
+
+
+                        <input
+                            id="new-patient-age"
+                            class="input-field"
+                            type="number"
+                            min="0"
+                            max="18"
+                            placeholder="Example: 8"
+                        >
+
+
+                        <div class="patient-form-actions">
+
+                            <button
+                                type="button"
+                                class="primary-button"
+                                onclick="createPatient()"
+                            >
+                                Save Patient
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="secondary-button"
+                                onclick="closePatientForm()"
+                            >
+                                Cancel
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- MESSAGE -->
+
+                    <label class="field-label">
+                        Caregiver message
+                    </label>
+
+
+                    <textarea
+                        id="caregiver-message"
+                        class="textarea-field"
+                        placeholder="Example: The medication is unavailable and we could not reach the hospital for two weeks."
+                    ></textarea>
+
+
+                    <!-- DEMO EXAMPLES -->
+
+                    <div class="demo-examples">
+
+                        <button
+                            class="example-button"
+                            onclick="useExample('en-high')"
+                        >
+                            English High
+                        </button>
+
+
+                        <button
+                            class="example-button"
+                            onclick="useExample('ar-high')"
+                        >
+                            Arabic High
+                        </button>
+
+
+                        <button
+                            class="example-button"
+                            onclick="useExample('en-medium')"
+                        >
+                            Medium
+                        </button>
+
+
+                        <button
+                            class="example-button"
+                            onclick="useExample('en-low')"
+                        >
+                            Low
+                        </button>
+
+                    </div>
+
+
+                    <button
+                        id="analyze-button"
+                        class="primary-button full-width"
+                        onclick="analyzeCase()"
+                    >
+                        Analyze with YASER AI
+                    </button>
+
+                </div>
+
+
+                <!-- WHY YASER -->
+
+                <div class="panel explanation-panel">
+
+                    <span class="section-kicker">
+                        WHY YASER AI?
+                    </span>
+
+
+                    <h3>
+                        From unstructured messages to actionable review
+                    </h3>
+
+
+                    <div class="comparison-list">
+
+                        <div class="comparison-item">
+
+                            <strong>
+                                SMS reminder
+                            </strong>
+
+                            <span>
+                                Sends a reminder.
+                            </span>
+
+                        </div>
+
+
+                        <div class="comparison-item">
+
+                            <strong>
+                                Spreadsheet
+                            </strong>
+
+                            <span>
+                                Stores information.
+                            </span>
+
+                        </div>
+
+
+                        <div class="comparison-item">
+
+                            <strong>
+                                YASER AI
+                            </strong>
+
+                            <span>
+                                Understands messages,
+                                extracts continuity signals,
+                                prioritizes cases,
+                                and explains why human review is needed.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- AI ANALYSIS -->
+        <!-- ================================================= -->
+
+        <section
+            id="analysis"
+            class="dashboard-section"
+        >
+
+            <div class="section-header">
+
+                <div>
+
+                    <span class="section-kicker">
+                        STEP 02
+                    </span>
+
+                    <h2>
+                        AI Analysis
+                    </h2>
+
+                    <p>
+                        Explainable care-continuity analysis.
+                    </p>
 
                 </div>
 
@@ -547,124 +814,291 @@
 
 
             <div
-                id="alertCreated"
-                class="success-box hidden"
-            ></div>
+                id="analysis-empty"
+                class="empty-panel"
+            >
 
+                <div class="empty-icon">
+                    AI
+                </div>
+
+
+                <h3>
+                    No analysis yet
+                </h3>
+
+
+                <p>
+                    Submit a caregiver message to begin.
+                </p>
+
+
+                <button
+                    class="primary-button"
+                    onclick="showSectionById('caregiver')"
+                >
+                    Enter Caregiver Message
+                </button>
+
+            </div>
+
+
+            <div
+                id="analysis-result"
+                class="analysis-result hidden"
+            >
+
+                <div class="priority-hero">
+
+                    <div>
+
+                        <span class="section-kicker">
+                            CARE CONTINUITY REVIEW PRIORITY
+                        </span>
+
+
+                        <h2 id="result-priority">
+                            HIGH PRIORITY
+                        </h2>
+
+                    </div>
+
+
+                    <div
+                        id="result-score"
+                        class="score-circle"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="analysis-grid">
+
+
+                    <div class="panel">
+
+                        <span class="section-kicker">
+                            DETECTED SIGNALS
+                        </span>
+
+
+                        <h3>
+                            Explainable findings
+                        </h3>
+
+
+                        <div
+                            id="result-reasons"
+                            class="reason-list"
+                        >
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel">
+
+                        <span class="section-kicker">
+                            EXTRACTED DATA
+                        </span>
+
+
+                        <h3>
+                            AI signal extraction
+                        </h3>
+
+
+                        <div
+                            id="result-data"
+                            class="data-grid"
+                        >
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="human-review-banner">
+
+                    <div>
+
+                        <strong>
+                            Human Review Required
+                        </strong>
+
+
+                        <span>
+                            YASER AI does not make
+                            autonomous clinical decisions.
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        class="primary-button"
+                        onclick="sendToHealthWorker()"
+                    >
+                        Send to Health Worker
+                    </button>
+
+                </div>
+
+            </div>
 
         </section>
 
 
         <!-- ================================================= -->
-        <!-- PROCESSING PATHWAY -->
+        <!-- HEALTH WORKER -->
         <!-- ================================================= -->
 
-        <section class="panel">
+        <section
+            id="health-worker"
+            class="dashboard-section"
+        >
 
             <div class="section-header">
 
                 <div>
 
-                    <div class="section-kicker">
-                        SYSTEM ARCHITECTURE
-                    </div>
+                    <span class="section-kicker">
+                        STEP 03
+                    </span>
+
 
                     <h2>
-                        Care Continuity Pathway
+                        Health Worker Review
                     </h2>
+
+
+                    <p>
+                        Human review remains the final decision point.
+                    </p>
 
                 </div>
 
             </div>
 
 
-            <div class="pathway">
+            <div
+                id="worker-empty"
+                class="empty-panel"
+            >
+
+                <div class="empty-icon">
+                    HW
+                </div>
 
 
-                <div class="path-node">
+                <h3>
+                    Review queue
+                </h3>
 
-                    <span>01</span>
 
-                    Caregiver
+                <p>
+                    Analyze a caregiver message to create
+                    a case for human review.
+                </p>
 
-                    <small>
-                        SMS / Voice / Web
-                    </small>
+            </div>
+
+
+            <div
+                id="worker-case"
+                class="worker-case hidden"
+            >
+
+                <div class="priority-hero">
+
+                    <div>
+
+                        <span class="section-kicker">
+                            CASE
+                        </span>
+
+
+                        <h2 id="worker-priority">
+                            HIGH PRIORITY
+                        </h2>
+
+
+                        <p id="worker-patient">
+                            Patient
+                        </p>
+
+                    </div>
+
+
+                    <span
+                        id="worker-status"
+                        class="review-status"
+                    >
+                        OPEN
+                    </span>
 
                 </div>
 
 
-                <div class="path-arrow">
-                    →
-                </div>
+                <div class="panel">
+
+                    <span class="section-kicker">
+                        AI EXPLANATION
+                    </span>
 
 
-                <div class="path-node">
-
-                    <span>02</span>
-
-                    Lightweight NLP
-
-                    <small>
-                        Information extraction
-                    </small>
-
-                </div>
+                    <h3>
+                        Why this case was routed
+                    </h3>
 
 
-                <div class="path-arrow">
-                    →
-                </div>
-
-
-                <div class="path-node">
-
-                    <span>03</span>
-
-                    ML Engine
-
-                    <small>
-                        Review classification
-                    </small>
+                    <div
+                        id="worker-reasons"
+                        class="reason-list"
+                    >
+                    </div>
 
                 </div>
 
 
-                <div class="path-arrow">
-                    →
+                <div class="action-panel">
+
+                    <h3>
+                        Human Review Actions
+                    </h3>
+
+
+                    <div class="action-buttons">
+
+                        <button
+                            class="action-button"
+                            onclick="completeFollowUp('Contacted caregiver')"
+                        >
+                            Contact Caregiver
+                        </button>
+
+
+                        <button
+                            class="action-button"
+                            onclick="completeFollowUp('Referral initiated')"
+                        >
+                            Initiate Referral
+                        </button>
+
+
+                        <button
+                            class="action-button"
+                            onclick="completeFollowUp('Follow-up scheduled')"
+                        >
+                            Schedule Follow-up
+                        </button>
+
+                    </div>
+
                 </div>
-
-
-                <div class="path-node">
-
-                    <span>04</span>
-
-                    Safety Layer
-
-                    <small>
-                        Transparent rules
-                    </small>
-
-                </div>
-
-
-                <div class="path-arrow">
-                    →
-                </div>
-
-
-                <div class="path-node human-node">
-
-                    <span>05</span>
-
-                    Health Worker
-
-                    <small>
-                        Human review
-                    </small>
-
-                </div>
-
 
             </div>
 
@@ -672,321 +1106,195 @@
 
 
         <!-- ================================================= -->
-        <!-- PATIENTS -->
+        <!-- EVALUATION -->
         <!-- ================================================= -->
 
-        <section class="panel">
+        <section
+            id="evaluation"
+            class="dashboard-section"
+        >
 
             <div class="section-header">
 
                 <div>
 
-                    <div class="section-kicker">
-                        PATIENTS
-                    </div>
+                    <span class="section-kicker">
+                        MODEL EVIDENCE
+                    </span>
+
 
                     <h2>
-                        Registered Patients
+                        AI Model Evaluation
                     </h2>
+
+
+                    <p>
+                        Prototype evaluation using synthetic scenarios.
+                    </p>
 
                 </div>
 
             </div>
 
 
-            <div class="table-container">
+            <div class="stat-grid evaluation-stats">
 
-                <table>
+                <div class="stat-card">
 
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                ID
-                            </th>
-
-                            <th>
-                                Patient
-                            </th>
-
-                            <th>
-                                Age
-                            </th>
-
-                            <th>
-                                Care Pathway
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody>
-
-                        {% for patient in patients %}
-
-                        <tr>
-
-                            <td>
-                                #{{ patient.id }}
-                            </td>
-
-                            <td>
-                                {{ patient.name }}
-                            </td>
-
-                            <td>
-                                {{ patient.age or "—" }}
-                            </td>
-
-                            <td>
-                                {{ patient.diagnosis or "—" }}
-                            </td>
-
-                        </tr>
-
-                        {% else %}
-
-                        <tr>
-
-                            <td
-                                colspan="4"
-                                class="empty"
-                            >
-                                No patients registered yet.
-                            </td>
-
-                        </tr>
-
-                        {% endfor %}
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </section>
-
-
-        <!-- ================================================= -->
-        <!-- ALERTS -->
-        <!-- ================================================= -->
-
-        <section class="panel">
-
-            <div class="section-header">
-
-                <div>
-
-                    <div class="section-kicker">
-                        REVIEW QUEUE
+                    <div class="stat-label">
+                        Synthetic Cases
                     </div>
 
-                    <h2>
-                        Care Continuity Alerts
-                    </h2>
+
+                    <div
+                        class="stat-value"
+                        id="eval-total"
+                    >
+                        —
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Accuracy
+                    </div>
+
+
+                    <div
+                        class="stat-value"
+                        id="eval-accuracy"
+                    >
+                        —
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Macro Precision
+                    </div>
+
+
+                    <div
+                        class="stat-value"
+                        id="eval-precision"
+                    >
+                        —
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Macro F1
+                    </div>
+
+
+                    <div
+                        class="stat-value"
+                        id="eval-f1"
+                    >
+                        —
+                    </div>
 
                 </div>
 
             </div>
 
 
-            <div class="table-container">
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                Alert
-                            </th>
-
-                            <th>
-                                Patient
-                            </th>
-
-                            <th>
-                                Priority
-                            </th>
-
-                            <th>
-                                Score
-                            </th>
-
-                            <th>
-                                Status
-                            </th>
-
-                        </tr>
-
-                    </thead>
+            <div class="analysis-grid">
 
 
-                    <tbody>
+                <div class="panel">
 
-                        {% for alert in alerts %}
+                    <span class="section-kicker">
+                        CONFUSION MATRIX
+                    </span>
 
-                        <tr>
 
-                            <td>
-                                #{{ alert.id }}
-                            </td>
+                    <h3>
+                        Model classification performance
+                    </h3>
 
-                            <td>
-                                Patient #{{ alert.patient_id }}
-                            </td>
 
-                            <td>
+                    <div
+                        id="confusion-matrix"
+                        class="confusion-matrix"
+                    >
+                    </div>
 
-                                <span
-                                    class="priority-badge {{ alert.priority|lower }}"
-                                >
-                                    {{ alert.priority }}
-                                </span>
+                </div>
 
-                            </td>
 
-                            <td>
-                                {{ alert.score }}
-                            </td>
+                <div class="panel">
 
-                            <td>
-                                {{ alert.status }}
-                            </td>
+                    <span class="section-kicker">
+                        MULTILINGUAL TESTS
+                    </span>
 
-                        </tr>
 
-                        {% else %}
+                    <h3>
+                        Arabic / English robustness checks
+                    </h3>
 
-                        <tr>
 
-                            <td
-                                colspan="5"
-                                class="empty"
-                            >
-                                No alerts created yet.
-                            </td>
+                    <div
+                        id="multilingual-tests"
+                        class="test-list"
+                    >
+                    </div>
 
-                        </tr>
-
-                        {% endfor %}
-
-                    </tbody>
-
-                </table>
+                </div>
 
             </div>
 
-        </section>
+
+            <div class="disclaimer">
+
+                <strong>
+                    Evaluation note
+                </strong>
 
 
-        <!-- ================================================= -->
-        <!-- SAFETY -->
-        <!-- ================================================= -->
-
-        <section class="responsible-ai">
-
-            <div class="responsible-title">
-                RESPONSIBLE AI
-            </div>
-
-            <h2>
-                Designed to support humans,
-                not replace them.
-            </h2>
-
-            <div class="responsible-grid">
-
-                <div>
-                    <strong>
-                        ✓ Human-in-the-loop
-                    </strong>
-
-                    <p>
-                        Every review priority is intended
-                        for authorized human assessment.
-                    </p>
-                </div>
-
-
-                <div>
-                    <strong>
-                        ✓ Transparent reasoning
-                    </strong>
-
-                    <p>
-                        The system displays the signals
-                        and rules contributing to the priority.
-                    </p>
-                </div>
-
-
-                <div>
-                    <strong>
-                        ✓ Non-diagnostic
-                    </strong>
-
-                    <p>
-                        YASER AI does not diagnose,
-                        prescribe, or select treatment.
-                    </p>
-                </div>
-
-
-                <div>
-                    <strong>
-                        ✓ Low-resource oriented
-                    </strong>
-
-                    <p>
-                        The architecture is designed around
-                        lightweight models and low-connectivity
-                        workflows.
-                    </p>
-                </div>
+                <p>
+                    These results are based on synthetic prototype
+                    scenarios and do not represent clinical validation,
+                    medical performance, or deployment readiness.
+                </p>
 
             </div>
 
         </section>
 
+
+        <!-- FOOTER -->
+
+        <footer class="app-footer">
+
+            <div>
+                YASER AI · Small AI for Development
+            </div>
+
+
+            <div>
+                Human-in-the-loop · No diagnosis · No prescribing
+            </div>
+
+        </footer>
 
     </main>
-
-
-    <!-- ================================================= -->
-    <!-- FOOTER -->
-    <!-- ================================================= -->
-
-    <footer>
-
-        <div>
-            <strong>
-                YASER AI
-            </strong>
-
-            <span>
-                Small AI for Care Continuity
-            </span>
-        </div>
-
-        <div>
-            Prototype • Synthetic Data • Human Review
-        </div>
-
-    </footer>
-
 
 </div>
 
 
-<script
-    src="/static/js/dashboard.js"
-></script>
+<script src="/static/js/dashboard.js"></script>
 
 </body>
 

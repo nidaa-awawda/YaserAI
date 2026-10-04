@@ -23,37 +23,68 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = BASE_DIR / "app" / "templates"
 STATIC_DIR = BASE_DIR / "app" / "static"
 
-TEMPLATES_DIR.mkdir(parents=True, exist_ok=True)
-STATIC_DIR.mkdir(parents=True, exist_ok=True)
+EVALUATION_PATH = (
+    BASE_DIR
+    / "data"
+    / "synthetic"
+    / "evaluation_results.json"
+)
+
+
+# ============================================================
+# DIRECTORIES
+# ============================================================
+
+TEMPLATES_DIR.mkdir(
+    parents=True,
+    exist_ok=True,
+)
+
+STATIC_DIR.mkdir(
+    parents=True,
+    exist_ok=True,
+)
 
 
 # ============================================================
 # DATABASE
 # ============================================================
 
-Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(
+    bind=engine
+)
 
 
 # ============================================================
-# APPLICATION
+# FASTAPI APPLICATION
 # ============================================================
 
 app = FastAPI(
     title="YASER AI",
-    description="Small AI for Care Continuity",
-    version="1.0.0"
+    description=(
+        "Small AI for Pediatric Leukemia "
+        "Care Continuity"
+    ),
+    version="1.0.0",
 )
 
 
 # ============================================================
-# STATIC + TEMPLATES
+# STATIC FILES
 # ============================================================
 
 app.mount(
     "/static",
-    StaticFiles(directory=str(STATIC_DIR)),
-    name="static"
+    StaticFiles(
+        directory=str(STATIC_DIR)
+    ),
+    name="static",
 )
+
+
+# ============================================================
+# TEMPLATES
+# ============================================================
 
 templates = Jinja2Templates(
     directory=str(TEMPLATES_DIR)
@@ -64,18 +95,78 @@ templates = Jinja2Templates(
 # HOME
 # ============================================================
 
-@app.get("/", response_class=HTMLResponse)
+@app.get(
+    "/",
+    response_class=HTMLResponse,
+)
 def home():
     return """
     <!DOCTYPE html>
     <html>
     <head>
+        <meta charset="UTF-8">
         <title>YASER AI</title>
+
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background: #f5f7fb;
+                margin: 0;
+                padding: 40px;
+                color: #172033;
+            }
+
+            .container {
+                max-width: 900px;
+                margin: auto;
+                background: white;
+                padding: 40px;
+                border-radius: 16px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            }
+
+            h1 {
+                margin-bottom: 10px;
+            }
+
+            p {
+                color: #5f6b7a;
+            }
+
+            a {
+                display: inline-block;
+                margin-top: 20px;
+                padding: 12px 20px;
+                background: #172033;
+                color: white;
+                text-decoration: none;
+                border-radius: 8px;
+            }
+        </style>
     </head>
+
     <body>
-        <h1>YASER AI</h1>
-        <p>Small AI for Care Continuity</p>
-        <a href="/dashboard">Open Dashboard</a>
+
+        <div class="container">
+
+            <h1>YASER AI</h1>
+
+            <p>
+                Small AI for Pediatric Leukemia
+                Care Continuity
+            </p>
+
+            <p>
+                YASER AI helps identify care-continuity
+                barriers and route cases for human review.
+            </p>
+
+            <a href="/dashboard">
+                Open Dashboard
+            </a>
+
+        </div>
+
     </body>
     </html>
     """
@@ -85,37 +176,52 @@ def home():
 # DASHBOARD
 # ============================================================
 
-@app.get("/dashboard", response_class=HTMLResponse)
-def dashboard(request: Request):
+@app.get(
+    "/dashboard",
+    response_class=HTMLResponse,
+)
+def dashboard(
+    request: Request,
+):
 
     db: Session = SessionLocal()
 
     try:
 
-        patients_count = db.query(Patient).count()
+        patients_count = (
+            db.query(Patient).count()
+        )
 
         open_alerts = (
             db.query(Alert)
-            .filter(Alert.status == "OPEN")
+            .filter(
+                Alert.status == "OPEN"
+            )
             .count()
         )
 
         high_alerts = (
             db.query(Alert)
-            .filter(Alert.priority == "HIGH_REVIEW")
+            .filter(
+                Alert.priority == "HIGH_REVIEW"
+            )
             .count()
         )
 
         alerts = (
             db.query(Alert)
-            .order_by(Alert.id.desc())
+            .order_by(
+                Alert.id.desc()
+            )
             .limit(50)
             .all()
         )
 
         patients = (
             db.query(Patient)
-            .order_by(Patient.id.desc())
+            .order_by(
+                Patient.id.desc()
+            )
             .limit(50)
             .all()
         )
@@ -129,7 +235,7 @@ def dashboard(request: Request):
                 "high_alerts": high_alerts,
                 "alerts": alerts,
                 "patients": patients,
-            }
+            },
         )
 
     finally:
@@ -148,7 +254,9 @@ def health():
         "system": "YASER AI",
         "purpose": "Care Continuity",
         "human_review": True,
-        "clinical_decision": False
+        "clinical_decision": False,
+        "diagnosis": False,
+        "prescription": False,
     }
 
 
@@ -157,16 +265,24 @@ def health():
 # ============================================================
 
 @app.post("/api/patients")
-def create_patient(payload: dict = Body(...)):
+def create_patient(
+    payload: dict = Body(...),
+):
 
     name = str(
-        payload.get("name", "")
+        payload.get(
+            "name",
+            "",
+        )
     ).strip()
 
     age = payload.get("age")
 
     diagnosis = str(
-        payload.get("diagnosis", "")
+        payload.get(
+            "diagnosis",
+            "",
+        )
     ).strip()
 
     if not name:
@@ -175,13 +291,17 @@ def create_patient(payload: dict = Body(...)):
             status_code=400,
             content={
                 "success": False,
-                "error": "Patient name is required."
-            }
+                "error": "Patient name is required.",
+            },
         )
 
     try:
 
-        age = int(age) if age not in [None, ""] else None
+        age = (
+            int(age)
+            if age not in [None, ""]
+            else None
+        )
 
     except ValueError:
 
@@ -189,8 +309,8 @@ def create_patient(payload: dict = Body(...)):
             status_code=400,
             content={
                 "success": False,
-                "error": "Age must be a number."
-            }
+                "error": "Age must be a number.",
+            },
         )
 
     db: Session = SessionLocal()
@@ -200,7 +320,11 @@ def create_patient(payload: dict = Body(...)):
         patient = Patient(
             name=name,
             age=age,
-            diagnosis=diagnosis or None
+            diagnosis=(
+                diagnosis
+                if diagnosis
+                else None
+            ),
         )
 
         db.add(patient)
@@ -214,7 +338,7 @@ def create_patient(payload: dict = Body(...)):
                 "name": patient.name,
                 "age": patient.age,
                 "diagnosis": patient.diagnosis,
-            }
+            },
         }
 
     finally:
@@ -234,7 +358,9 @@ def get_patients():
 
         patients = (
             db.query(Patient)
-            .order_by(Patient.id.desc())
+            .order_by(
+                Patient.id.desc()
+            )
             .all()
         )
 
@@ -250,10 +376,11 @@ def get_patients():
                         patient.created_at.isoformat()
                         if patient.created_at
                         else None
-                    )
+                    ),
                 }
+
                 for patient in patients
-            ]
+            ],
         }
 
     finally:
@@ -265,10 +392,15 @@ def get_patients():
 # ============================================================
 
 @app.post("/api/analyze")
-def analyze_message(payload: dict = Body(...)):
+def analyze_message(
+    payload: dict = Body(...),
+):
 
     text = str(
-        payload.get("text", "")
+        payload.get(
+            "text",
+            "",
+        )
     ).strip()
 
     if not text:
@@ -277,8 +409,10 @@ def analyze_message(payload: dict = Body(...)):
             status_code=400,
             content={
                 "success": False,
-                "error": "Please enter a caregiver message."
-            }
+                "error": (
+                    "Please enter a caregiver message."
+                ),
+            },
         )
 
     result = process_message(text)
@@ -286,24 +420,31 @@ def analyze_message(payload: dict = Body(...)):
     return {
         "success": True,
         "message": text,
-        "result": result
+        "result": result,
     }
 
 
 # ============================================================
-# ANALYZE + SAVE MESSAGE + CREATE ALERT
+# ANALYZE AND CREATE ALERT
 # ============================================================
 
-@app.post("/api/analyze-and-create-alert")
+@app.post(
+    "/api/analyze-and-create-alert"
+)
 def analyze_and_create_alert(
-    payload: dict = Body(...)
+    payload: dict = Body(...),
 ):
 
     text = str(
-        payload.get("text", "")
+        payload.get(
+            "text",
+            "",
+        )
     ).strip()
 
-    patient_id = payload.get("patient_id")
+    patient_id = payload.get(
+        "patient_id"
+    )
 
     if not text:
 
@@ -311,8 +452,10 @@ def analyze_and_create_alert(
             status_code=400,
             content={
                 "success": False,
-                "error": "Please enter a caregiver message."
-            }
+                "error": (
+                    "Please enter a caregiver message."
+                ),
+            },
         )
 
     if not patient_id:
@@ -321,20 +464,28 @@ def analyze_and_create_alert(
             status_code=400,
             content={
                 "success": False,
-                "error": "Please select a patient."
-            }
+                "error": (
+                    "Please select a patient."
+                ),
+            },
         )
 
     try:
-        patient_id = int(patient_id)
-    except ValueError:
+
+        patient_id = int(
+            patient_id
+        )
+
+    except (ValueError, TypeError):
 
         return JSONResponse(
             status_code=400,
             content={
                 "success": False,
-                "error": "Invalid patient ID."
-            }
+                "error": (
+                    "Invalid patient ID."
+                ),
+            },
         )
 
     db: Session = SessionLocal()
@@ -343,7 +494,9 @@ def analyze_and_create_alert(
 
         patient = (
             db.query(Patient)
-            .filter(Patient.id == patient_id)
+            .filter(
+                Patient.id == patient_id
+            )
             .first()
         )
 
@@ -353,15 +506,19 @@ def analyze_and_create_alert(
                 status_code=404,
                 content={
                     "success": False,
-                    "error": "Patient not found."
-                }
+                    "error": (
+                        "Patient not found."
+                    ),
+                },
             )
 
-        result = process_message(text)
+        result = process_message(
+            text
+        )
 
         message = Message(
             patient_id=patient_id,
-            text=text
+            text=text,
         )
 
         db.add(message)
@@ -374,12 +531,14 @@ def analyze_and_create_alert(
             priority=result["priority"],
             score=result["score"],
             reasons=json.dumps(
-                result["reasons"]
+                result["reasons"],
+                ensure_ascii=False,
             ),
             extracted_data=json.dumps(
-                result["extracted_data"]
+                result["extracted_data"],
+                ensure_ascii=False,
             ),
-            status="OPEN"
+            status="OPEN",
         )
 
         db.add(alert)
@@ -388,14 +547,18 @@ def analyze_and_create_alert(
 
         return {
             "success": True,
+
             "patient": {
                 "id": patient.id,
                 "name": patient.name,
                 "age": patient.age,
             },
+
             "message_id": message.id,
+
             "alert_id": alert.id,
-            "result": result
+
+            "result": result,
         }
 
     finally:
@@ -406,8 +569,12 @@ def analyze_and_create_alert(
 # PATIENT TIMELINE
 # ============================================================
 
-@app.get("/api/patients/{patient_id}/timeline")
-def patient_timeline(patient_id: int):
+@app.get(
+    "/api/patients/{patient_id}/timeline"
+)
+def patient_timeline(
+    patient_id: int,
+):
 
     db: Session = SessionLocal()
 
@@ -415,7 +582,9 @@ def patient_timeline(patient_id: int):
 
         patient = (
             db.query(Patient)
-            .filter(Patient.id == patient_id)
+            .filter(
+                Patient.id == patient_id
+            )
             .first()
         )
 
@@ -425,21 +594,33 @@ def patient_timeline(patient_id: int):
                 status_code=404,
                 content={
                     "success": False,
-                    "error": "Patient not found."
-                }
+                    "error": (
+                        "Patient not found."
+                    ),
+                },
             )
 
         messages = (
             db.query(Message)
-            .filter(Message.patient_id == patient_id)
-            .order_by(Message.id.desc())
+            .filter(
+                Message.patient_id
+                == patient_id
+            )
+            .order_by(
+                Message.id.desc()
+            )
             .all()
         )
 
         alerts = (
             db.query(Alert)
-            .filter(Alert.patient_id == patient_id)
-            .order_by(Alert.id.desc())
+            .filter(
+                Alert.patient_id
+                == patient_id
+            )
+            .order_by(
+                Alert.id.desc()
+            )
             .all()
         )
 
@@ -461,8 +642,9 @@ def patient_timeline(patient_id: int):
                         message.created_at.isoformat()
                         if message.created_at
                         else None
-                    )
+                    ),
                 }
+
                 for message in messages
             ],
 
@@ -472,19 +654,24 @@ def patient_timeline(patient_id: int):
                     "priority": alert.priority,
                     "score": alert.score,
                     "status": alert.status,
+
                     "reasons": (
-                        json.loads(alert.reasons)
+                        json.loads(
+                            alert.reasons
+                        )
                         if alert.reasons
                         else []
                     ),
+
                     "created_at": (
                         alert.created_at.isoformat()
                         if alert.created_at
                         else None
-                    )
+                    ),
                 }
+
                 for alert in alerts
-            ]
+            ],
         }
 
     finally:
@@ -495,8 +682,12 @@ def patient_timeline(patient_id: int):
 # CLOSE ALERT
 # ============================================================
 
-@app.post("/api/alerts/{alert_id}/close")
-def close_alert(alert_id: int):
+@app.post(
+    "/api/alerts/{alert_id}/close"
+)
+def close_alert(
+    alert_id: int,
+):
 
     db: Session = SessionLocal()
 
@@ -504,7 +695,9 @@ def close_alert(alert_id: int):
 
         alert = (
             db.query(Alert)
-            .filter(Alert.id == alert_id)
+            .filter(
+                Alert.id == alert_id
+            )
             .first()
         )
 
@@ -514,20 +707,71 @@ def close_alert(alert_id: int):
                 status_code=404,
                 content={
                     "success": False,
-                    "error": "Alert not found."
-                }
+                    "error": (
+                        "Alert not found."
+                    ),
+                },
             )
 
         alert.status = "REVIEWED"
-        alert.reviewed_at = datetime.utcnow()
+
+        alert.reviewed_at = (
+            datetime.utcnow()
+        )
 
         db.commit()
 
         return {
             "success": True,
             "alert_id": alert.id,
-            "status": alert.status
+            "status": alert.status,
         }
 
     finally:
         db.close()
+
+
+# ============================================================
+# MODEL EVALUATION
+# ============================================================
+
+@app.get("/api/evaluation")
+def get_evaluation():
+
+    if not EVALUATION_PATH.exists():
+
+        return JSONResponse(
+            status_code=404,
+            content={
+                "success": False,
+                "error": (
+                    "Evaluation results are not available. "
+                    "Run scripts\\evaluate_model.py first."
+                ),
+            },
+        )
+
+    try:
+
+        with open(
+            EVALUATION_PATH,
+            "r",
+            encoding="utf-8",
+        ) as file:
+
+            results = json.load(file)
+
+        return {
+            "success": True,
+            "results": results,
+        }
+
+    except Exception as error:
+
+        return JSONResponse(
+            status_code=500,
+            content={
+                "success": False,
+                "error": str(error),
+            },
+        )

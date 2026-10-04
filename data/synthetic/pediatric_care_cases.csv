@@ -1,0 +1,121 @@
+patient_id,age_group,location,last_visit_days,medication_available,lab_delayed,referral_pending,connectivity,care_interruption,caregiver_message,risk_level
+YASER-001,0-4,Gaza,6,Yes,No,No,Normal,No,The child attended the planned follow-up.,LOW_REVIEW
+YASER-002,5-9,Gaza,2,Yes,No,No,Normal,No,The child is doing well and the next visit is confirmed.,LOW_REVIEW
+YASER-003,0-4,Gaza,5,Yes,No,No,Normal,No,The next visit is scheduled.,LOW_REVIEW
+YASER-004,0-4,Gaza,1,Yes,No,No,Normal,No,The medication is available.,LOW_REVIEW
+YASER-005,5-9,Gaza,5,Yes,No,No,Normal,No,The medication is available.,LOW_REVIEW
+YASER-006,15-18,Gaza,4,Yes,No,No,Normal,No,The laboratory follow-up is on schedule.,LOW_REVIEW
+YASER-007,10-14,Gaza,2,Yes,No,No,Normal,No,The child is doing well and the next visit is confirmed.,LOW_REVIEW
+YASER-008,15-18,West Bank,3,Yes,No,No,Normal,No,The medication is available.,LOW_REVIEW
+YASER-009,5-9,West Bank,1,Yes,No,No,Normal,No,The next appointment is confirmed.,LOW_REVIEW
+YASER-010,15-18,Gaza,3,Yes,No,No,Normal,No,The child attended the planned follow-up.,LOW_REVIEW
+YASER-011,10-14,Gaza,6,Yes,No,No,Normal,No,The next visit is scheduled.,LOW_REVIEW
+YASER-012,0-4,West Bank,1,Yes,No,No,Normal,No,The laboratory follow-up is on schedule.,LOW_REVIEW
+YASER-013,10-14,West Bank,5,Yes,No,No,Normal,No,The medication is available.,LOW_REVIEW
+YASER-014,0-4,Gaza,6,Yes,No,No,Normal,No,The medication is available.,LOW_REVIEW
+YASER-015,10-14,Gaza,2,Yes,No,No,Normal,No,The next appointment is confirmed.,LOW_REVIEW
+YASER-016,15-18,West Bank,4,Yes,No,No,Normal,No,The child is doing well and the next visit is confirmed.,LOW_REVIEW
+YASER-017,10-14,Gaza,3,Yes,No,No,Normal,No,The child attended the planned follow-up.,LOW_REVIEW
+YASER-018,5-9,West Bank,6,Yes,No,No,Normal,No,The child is doing well and the next visit is confirmed.,LOW_REVIEW
+YASER-019,0-4,Gaza,5,Yes,No,No,Normal,No,The child is doing well and the next visit is confirmed.,LOW_REVIEW
+YASER-020,5-9,Gaza,4,Yes,No,No,Normal,No,The next visit is scheduled.,LOW_REVIEW
+YASER-021,10-14,Gaza,6,Yes,No,No,Normal,No,The child attended the planned follow-up.,LOW_REVIEW
+YASER-022,0-4,Gaza,1,Yes,No,No,Normal,No,The child attended the planned follow-up.,LOW_REVIEW
+YASER-023,15-18,West Bank,1,Yes,No,No,Normal,No,The medication is available.,LOW_REVIEW
+YASER-024,10-14,Gaza,6,Yes,No,No,Normal,No,The next visit is scheduled.,LOW_REVIEW
+YASER-025,15-18,West Bank,2,Yes,No,No,Normal,No,The child attended the planned follow-up.,LOW_REVIEW
+YASER-026,5-9,Gaza,6,Yes,No,No,Normal,No,The laboratory follow-up is on schedule.,LOW_REVIEW
+YASER-027,10-14,West Bank,5,Yes,No,No,Normal,No,The next visit is scheduled.,LOW_REVIEW
+YASER-028,10-14,Gaza,2,Yes,No,No,Normal,No,The laboratory follow-up is on schedule.,LOW_REVIEW
+YASER-029,15-18,Gaza,1,Yes,No,No,Normal,No,The next appointment is confirmed.,LOW_REVIEW
+YASER-030,5-9,Gaza,6,Yes,No,No,Normal,No,The next visit is scheduled.,LOW_REVIEW
+YASER-031,0-4,West Bank,4,Yes,No,No,Normal,No,The laboratory follow-up is on schedule.,LOW_REVIEW
+YASER-032,15-18,West Bank,5,Yes,No,No,Normal,No,The next appointment is confirmed.,LOW_REVIEW
+YASER-033,0-4,West Bank,6,Yes,No,No,Normal,No,The child attended the planned follow-up.,LOW_REVIEW
+YASER-034,0-4,West Bank,4,Yes,No,No,Normal,No,The medication is available.,LOW_REVIEW
+YASER-035,15-18,Gaza,6,Yes,No,No,Normal,No,The child is doing well and the next visit is confirmed.,LOW_REVIEW
+YASER-036,10-14,Gaza,5,Yes,No,No,Normal,No,The next appointment is confirmed.,LOW_REVIEW
+YASER-037,10-14,Gaza,2,Yes,No,No,Normal,No,The child attended the planned follow-up.,LOW_REVIEW
+YASER-038,5-9,Gaza,5,Yes,No,No,Normal,No,The child attended the planned follow-up.,LOW_REVIEW
+YASER-039,15-18,Gaza,1,Yes,No,No,Normal,No,The child attended the planned follow-up.,LOW_REVIEW
+YASER-040,10-14,Gaza,1,Yes,No,No,Normal,No,The medication is available.,LOW_REVIEW
+YASER-041,0-4,Gaza,10,No,Yes,Yes,Normal,No,We are having difficulty reaching the clinic.,MEDIUM_REVIEW
+YASER-042,15-18,Gaza,7,No,Yes,Yes,Low,No,The appointment is not confirmed.,MEDIUM_REVIEW
+YASER-043,10-14,West Bank,9,No,Yes,Yes,Normal,No,The referral is still pending.,MEDIUM_REVIEW
+YASER-044,10-14,Gaza,9,Yes,Yes,Yes,Normal,No,The medication is unavailable.,MEDIUM_REVIEW
+YASER-045,0-4,Gaza,5,Yes,No,Yes,Normal,No,The appointment is not confirmed.,MEDIUM_REVIEW
+YASER-046,15-18,Gaza,9,Yes,No,Yes,Low,No,The laboratory follow-up is delayed.,MEDIUM_REVIEW
+YASER-047,5-9,Gaza,5,No,No,No,Low,No,The referral is still pending.,MEDIUM_REVIEW
+YASER-048,0-4,Gaza,5,No,No,Yes,Normal,No,The referral is still pending.,MEDIUM_REVIEW
+YASER-049,5-9,West Bank,6,No,Yes,No,Low,No,The pharmacy does not have the medication.,MEDIUM_REVIEW
+YASER-050,0-4,West Bank,9,Yes,Yes,Yes,Normal,No,The pharmacy does not have the medication.,MEDIUM_REVIEW
+YASER-051,5-9,West Bank,8,No,Yes,No,Normal,No,The pharmacy does not have the medication.,MEDIUM_REVIEW
+YASER-052,15-18,Gaza,8,No,No,No,Low,No,The pharmacy does not have the medication.,MEDIUM_REVIEW
+YASER-053,15-18,Gaza,6,No,Yes,Yes,Normal,No,The appointment is not confirmed.,MEDIUM_REVIEW
+YASER-054,10-14,Gaza,5,No,Yes,Yes,Normal,No,The appointment is not confirmed.,MEDIUM_REVIEW
+YASER-055,0-4,Gaza,10,Yes,No,Yes,Normal,No,The pharmacy does not have the medication.,MEDIUM_REVIEW
+YASER-056,0-4,Gaza,8,No,No,Yes,Low,No,We are having difficulty reaching the clinic.,MEDIUM_REVIEW
+YASER-057,10-14,West Bank,6,No,No,No,Normal,No,The pharmacy does not have the medication.,MEDIUM_REVIEW
+YASER-058,15-18,Gaza,5,Yes,No,Yes,Low,No,The medication is unavailable.,MEDIUM_REVIEW
+YASER-059,5-9,West Bank,7,Yes,No,No,Normal,No,The medication is unavailable.,MEDIUM_REVIEW
+YASER-060,10-14,Gaza,6,No,Yes,Yes,Normal,No,The appointment is not confirmed.,MEDIUM_REVIEW
+YASER-061,10-14,Gaza,10,No,Yes,No,Low,No,The laboratory follow-up is delayed.,MEDIUM_REVIEW
+YASER-062,0-4,Gaza,10,No,No,Yes,Normal,No,The laboratory follow-up is delayed.,MEDIUM_REVIEW
+YASER-063,5-9,West Bank,6,No,No,Yes,Normal,No,The laboratory follow-up is delayed.,MEDIUM_REVIEW
+YASER-064,5-9,Gaza,7,Yes,No,Yes,Normal,No,The medication is unavailable.,MEDIUM_REVIEW
+YASER-065,10-14,Gaza,7,Yes,Yes,Yes,Low,No,The laboratory follow-up is delayed.,MEDIUM_REVIEW
+YASER-066,15-18,Gaza,6,Yes,Yes,No,Normal,No,We are having difficulty reaching the clinic.,MEDIUM_REVIEW
+YASER-067,10-14,West Bank,10,Yes,No,Yes,Normal,No,The pharmacy does not have the medication.,MEDIUM_REVIEW
+YASER-068,0-4,West Bank,6,Yes,No,No,Low,No,The referral is still pending.,MEDIUM_REVIEW
+YASER-069,5-9,Gaza,10,Yes,No,No,Low,No,The pharmacy does not have the medication.,MEDIUM_REVIEW
+YASER-070,10-14,West Bank,10,No,No,Yes,Normal,No,The medication is unavailable.,MEDIUM_REVIEW
+YASER-071,5-9,West Bank,5,Yes,No,No,Low,No,The laboratory follow-up is delayed.,MEDIUM_REVIEW
+YASER-072,0-4,West Bank,9,Yes,No,Yes,Low,No,The referral is still pending.,MEDIUM_REVIEW
+YASER-073,5-9,West Bank,8,Yes,No,No,Normal,No,The medication is unavailable.,MEDIUM_REVIEW
+YASER-074,10-14,West Bank,10,No,No,No,Low,No,The appointment is not confirmed.,MEDIUM_REVIEW
+YASER-075,5-9,Gaza,8,No,Yes,No,Low,No,We are having difficulty reaching the clinic.,MEDIUM_REVIEW
+YASER-076,0-4,West Bank,7,Yes,No,No,Low,No,We are having difficulty reaching the clinic.,MEDIUM_REVIEW
+YASER-077,15-18,Gaza,9,No,Yes,Yes,Low,No,The referral is still pending.,MEDIUM_REVIEW
+YASER-078,10-14,Gaza,6,No,Yes,Yes,Normal,No,We are having difficulty reaching the clinic.,MEDIUM_REVIEW
+YASER-079,0-4,Gaza,8,Yes,No,No,Normal,No,The medication is unavailable.,MEDIUM_REVIEW
+YASER-080,15-18,West Bank,8,Yes,Yes,Yes,Normal,No,The appointment is not confirmed.,MEDIUM_REVIEW
+YASER-081,15-18,Gaza,12,No,Yes,No,Low,Yes,The medication is unavailable and care has been interrupted.,HIGH_REVIEW
+YASER-082,5-9,Gaza,17,No,Yes,Yes,Low,Yes,The referral is pending and care has been interrupted.,HIGH_REVIEW
+YASER-083,10-14,West Bank,19,No,Yes,No,Low,Yes,We have not been able to continue follow-up.,HIGH_REVIEW
+YASER-084,15-18,Gaza,21,No,Yes,No,Low,Yes,The referral is pending and care has been interrupted.,HIGH_REVIEW
+YASER-085,10-14,Gaza,20,No,Yes,No,Low,Yes,We have not been able to continue follow-up.,HIGH_REVIEW
+YASER-086,15-18,Gaza,14,No,Yes,No,Low,Yes,The medication is unavailable and care has been interrupted.,HIGH_REVIEW
+YASER-087,10-14,Gaza,14,No,Yes,No,Low,Yes,The laboratory follow-up is delayed and the medication is unavailable.,HIGH_REVIEW
+YASER-088,0-4,Gaza,12,No,Yes,Yes,Low,Yes,The referral is pending and care has been interrupted.,HIGH_REVIEW
+YASER-089,5-9,Gaza,11,No,Yes,No,Low,Yes,The referral is pending and care has been interrupted.,HIGH_REVIEW
+YASER-090,10-14,West Bank,16,No,Yes,Yes,Low,Yes,We could not reach the hospital for two weeks.,HIGH_REVIEW
+YASER-091,15-18,West Bank,19,No,Yes,Yes,Low,Yes,We have not been able to continue follow-up.,HIGH_REVIEW
+YASER-092,15-18,West Bank,10,No,Yes,No,Low,Yes,The laboratory follow-up is delayed and the medication is unavailable.,HIGH_REVIEW
+YASER-093,15-18,West Bank,18,No,Yes,Yes,Low,Yes,The referral is pending and care has been interrupted.,HIGH_REVIEW
+YASER-094,5-9,West Bank,16,No,Yes,No,Low,Yes,The medication is unavailable and care has been interrupted.,HIGH_REVIEW
+YASER-095,15-18,West Bank,20,No,Yes,No,Low,Yes,The medication is unavailable and the referral has not been completed.,HIGH_REVIEW
+YASER-096,5-9,West Bank,12,No,Yes,Yes,Low,Yes,The referral is pending and care has been interrupted.,HIGH_REVIEW
+YASER-097,0-4,Gaza,20,No,Yes,No,Low,Yes,We could not reach the hospital for two weeks.,HIGH_REVIEW
+YASER-098,15-18,Gaza,10,No,Yes,No,Low,Yes,The referral is pending and care has been interrupted.,HIGH_REVIEW
+YASER-099,10-14,Gaza,17,No,Yes,No,Low,Yes,The laboratory follow-up is delayed and the medication is unavailable.,HIGH_REVIEW
+YASER-100,15-18,West Bank,16,No,Yes,No,Low,Yes,The medication is unavailable and care has been interrupted.,HIGH_REVIEW
+YASER-101,15-18,Gaza,21,No,Yes,Yes,Low,Yes,The laboratory follow-up is delayed and the medication is unavailable.,HIGH_REVIEW
+YASER-102,5-9,Gaza,20,No,Yes,Yes,Low,Yes,The medication is unavailable and care has been interrupted.,HIGH_REVIEW
+YASER-103,5-9,Gaza,10,No,Yes,Yes,Low,Yes,We could not reach the hospital for two weeks.,HIGH_REVIEW
+YASER-104,5-9,West Bank,20,No,Yes,Yes,Low,Yes,We have not been able to continue follow-up.,HIGH_REVIEW
+YASER-105,5-9,West Bank,21,No,Yes,No,Low,Yes,The laboratory follow-up is delayed and the medication is unavailable.,HIGH_REVIEW
+YASER-106,5-9,Gaza,12,No,Yes,No,Low,Yes,The medication is unavailable and care has been interrupted.,HIGH_REVIEW
+YASER-107,0-4,West Bank,19,No,Yes,No,Low,Yes,The referral is pending and care has been interrupted.,HIGH_REVIEW
+YASER-108,5-9,Gaza,19,No,Yes,Yes,Low,Yes,The medication is unavailable and care has been interrupted.,HIGH_REVIEW
+YASER-109,10-14,Gaza,19,No,Yes,Yes,Low,Yes,The laboratory follow-up is delayed and the medication is unavailable.,HIGH_REVIEW
+YASER-110,15-18,West Bank,11,No,Yes,No,Low,Yes,The medication is unavailable and care has been interrupted.,HIGH_REVIEW
+YASER-111,15-18,West Bank,11,No,Yes,No,Low,Yes,The laboratory follow-up is delayed and the medication is unavailable.,HIGH_REVIEW
+YASER-112,15-18,Gaza,16,No,Yes,Yes,Low,Yes,The medication is unavailable and the referral has not been completed.,HIGH_REVIEW
+YASER-113,10-14,West Bank,17,No,Yes,No,Low,Yes,The medication is unavailable and the referral has not been completed.,HIGH_REVIEW
+YASER-114,10-14,West Bank,13,No,Yes,Yes,Low,Yes,The laboratory follow-up is delayed and the medication is unavailable.,HIGH_REVIEW
+YASER-115,15-18,Gaza,17,No,Yes,No,Low,Yes,The laboratory follow-up is delayed and the medication is unavailable.,HIGH_REVIEW
+YASER-116,0-4,West Bank,15,No,Yes,Yes,Low,Yes,The referral is pending and care has been interrupted.,HIGH_REVIEW
+YASER-117,5-9,West Bank,14,No,Yes,No,Low,Yes,The laboratory follow-up is delayed and the medication is unavailable.,HIGH_REVIEW
+YASER-118,10-14,Gaza,18,No,Yes,Yes,Low,Yes,The medication is unavailable and care has been interrupted.,HIGH_REVIEW
+YASER-119,5-9,West Bank,17,No,Yes,Yes,Low,Yes,The medication is unavailable and the referral has not been completed.,HIGH_REVIEW
+YASER-120,15-18,West Bank,17,No,Yes,Yes,Low,Yes,The medication is unavailable and care has been interrupted.,HIGH_REVIEW

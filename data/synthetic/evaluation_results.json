@@ -1,0 +1,105 @@
+{
+  "dataset": {
+    "name": "Synthetic Pediatric Care Continuity Dataset",
+    "total_cases": 120,
+    "training_cases": 90,
+    "test_cases": 30,
+    "synthetic": true
+  },
+  "metrics": {
+    "accuracy": 1.0,
+    "macro_precision": 1.0,
+    "macro_recall": 1.0,
+    "macro_f1": 1.0
+  },
+  "classification_report": {
+    "HIGH_REVIEW": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 10
+    },
+    "LOW_REVIEW": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 10
+    },
+    "MEDIUM_REVIEW": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 10
+    },
+    "accuracy": 1.0,
+    "macro avg": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 30
+    },
+    "weighted avg": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 30
+    }
+  },
+  "confusion_matrix": {
+    "labels": [
+      "LOW_REVIEW",
+      "MEDIUM_REVIEW",
+      "HIGH_REVIEW"
+    ],
+    "matrix": [
+      [
+        10,
+        0,
+        0
+      ],
+      [
+        0,
+        10,
+        0
+      ],
+      [
+        0,
+        0,
+        10
+      ]
+    ]
+  },
+  "multilingual_tests": [
+    {
+      "text": "The child is doing well and the next visit is confirmed.",
+      "expected": "LOW_REVIEW",
+      "predicted": "LOW_REVIEW",
+      "passed": true
+    },
+    {
+      "text": "The pharmacy does not have the medication.",
+      "expected": "MEDIUM_REVIEW",
+      "predicted": "MEDIUM_REVIEW",
+      "passed": true
+    },
+    {
+      "text": "The medication is unavailable and care has been interrupted.",
+      "expected": "HIGH_REVIEW",
+      "predicted": "HIGH_REVIEW",
+      "passed": true
+    },
+    {
+      "text": "الدواء غير متوفر ولم نستطع الوصول إلى المستشفى.",
+      "expected": "HIGH_REVIEW",
+      "predicted": "MEDIUM_REVIEW",
+      "passed": false
+    },
+    {
+      "text": "الموعد غير مؤكد والإحالة ما زالت معلقة.",
+      "expected": "MEDIUM_REVIEW",
+      "predicted": "MEDIUM_REVIEW",
+      "passed": true
+    }
+  ],
+  "disclaimer": "Prototype evaluation using synthetic scenarios. These results do not represent clinical validation."
+}
