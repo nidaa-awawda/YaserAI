@@ -526,6 +526,8 @@ Real-world deployment would require appropriate:
 **Current stage:** Hackathon MVP / Prototype
 
 **Focus:** Health · Small AI · Pediatric Leukemia · Care Continuity · Arabic NLP · Offline AI · Responsible AI
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/05f352d8-dea9-4560-9249-c0d0a486b74d" />
+
 
 ---
 
